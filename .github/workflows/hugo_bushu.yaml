@@ -30,8 +30,8 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           # github_token: ${{ secrets.GITHUB_TOKEN }} # 该项适用于发布到源码相同repo的情况，不能用于发布到其他repo
-          personal_token: ${{ secrets.henry }}
-          external_repository: henryfish518/carbideprox.github.io # 指定目标仓库carbideprox.github.io
+          personal_token: ${{ secrets.HENRY }}
+          external_repository: henryfish518/carbideprox.github.io # 指定目标仓库
           publish_dir: ./public
           publish_branch: main # 指定目标分支
           cname: carbideprox.com # 如果你有自定义域名

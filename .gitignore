@@ -9,3 +9,4 @@ dist/
 public/
 resources/
 .hugo_build.lock
+package-lock.json
