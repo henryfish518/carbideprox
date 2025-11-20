@@ -1,0 +1,23 @@
+{{/* 获取文章封面图片，如果没有则随机选择默认封面 */}}
+{{ $coverImage := "" }}
+
+{{/* 从配置文件中获取默认封面图片列表 */}}
+{{ $defaultCovers := site.Params.default_cover_images }}
+
+{{/* 检查文章是否有封面图片 */}}
+{{ if .Params.image }}
+  {{ $coverImage = .Params.image }}
+{{ else if .Params.thumbnail }}
+  {{ $coverImage = .Params.thumbnail }}
+{{ else if .Params.cover }}
+  {{ $coverImage = .Params.cover }}
+{{ else if .Resources.GetMatch "*cover*" }}
+  {{ $coverImage = .Resources.GetMatch "*cover*" }}
+{{ else if $defaultCovers }}
+  {{/* 如果没有封面图片，从配置文件中随机选择一张默认封面 */}}
+  {{ $randomIndex := mod (now.UnixNano) (len $defaultCovers) }}
+  {{ $coverImage = index $defaultCovers $randomIndex }}
+{{ end }}
+
+{{/* 返回封面图片路径 */}}
+{{ return $coverImage }}

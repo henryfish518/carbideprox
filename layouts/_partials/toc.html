@@ -1,0 +1,13 @@
+{{ if not .Params.notoc -}}
+  {{ with .TableOfContents -}}
+    {{ if ne . `<nav id="TableOfContents"></nav>` -}}
+      <div class="td-toc">
+        <div class="td-toc__title">
+          <span class="td-toc__title__text">本页大纲</span>
+          <a class="td-toc__title__link" title="回顶部" href="#"></a>
+        </div>
+        {{ . }}
+      </div>
+    {{ end -}}
+  {{ end -}}
+{{ end -}}

@@ -1,0 +1,129 @@
+{{/* 
+可重用的文章展示模块
+参数:
+- title: 模块标题
+- category: 文章分类 (可选)
+- tags: 文章标签 (可选)
+- limit: 显示文章数量 (默认8)
+- viewAllLink: 查看全部链接 (可选)
+*/}}
+{{ $title := .title | default "文章列表" }}
+{{ $category := .category | default "" }}
+{{ $tags := .tags | default (slice "") }}
+{{ $limit := .limit | default 8 }}
+{{ $viewAllLink := .viewAllLink | default "#" }}
+{{ $site := .Site }}
+
+<!-- 获取文章 -->
+{{ $allPages := $site.RegularPages }}
+{{ $pages := $allPages }}
+{{ if $category }}
+<!-- 定义分类映射：英文名到中文名 -->
+{{ $categoryMap := dict "yyjs" "电商运营技术" "zbrj" "电商直播软件" "dqrj" "店群软件" "cprj" "多多出评软件" }}
+{{ $categoryName := index $categoryMap $category | default $category }}
+    
+    <!-- 优先通过categories字段筛选文章 -->
+    {{ $pages = where $allPages "Params.categories" "intersect" (slice $categoryName) }}
+    
+    <!-- 如果通过categories字段找不到，尝试通过英文名筛选 -->
+    {{ if eq (len $pages) 0 }}
+        {{ $pages = where $allPages "Params.categories" "intersect" (slice $category) }}
+    {{ end }}
+    
+    <!-- 如果通过categories字段找不到，尝试通过文件路径匹配文件夹（支持Windows和Unix路径） -->
+    {{ if eq (len $pages) 0 }}
+        {{ $filteredPages := slice }}
+        {{ range $allPages }}
+            {{ $filePath := .File.Path }}
+            {{ if or (in $filePath (printf "/%s/" $category)) 
+                    (in $filePath (printf "%s/" $category)) 
+                    (in $filePath (printf "/%s" $category))
+                    (in $filePath (printf "\\%s\\" $category))
+                    (in $filePath (printf "%s\\" $category))
+                    (in $filePath (printf "\\%s" $category)) }}
+                {{ $filteredPages = $filteredPages | append . }}
+            {{ end }}
+        {{ end }}
+        {{ $pages = $filteredPages }}
+    {{ end }}
+    <!-- 如果仍然找不到，尝试通过文件目录筛选 -->
+    {{ if eq (len $pages) 0 }}
+        {{ $filteredPages := slice }}
+        {{ range $allPages }}
+            {{ if and (eq .Section "zh") (in .File.Dir $category) }}
+                {{ $filteredPages = $filteredPages | append . }}
+            {{ end }}
+        {{ end }}
+        {{ $pages = $filteredPages }}
+    {{ end }}
+    <!-- 如果仍然找不到，尝试通过文件名筛选 -->
+    {{ if eq (len $pages) 0 }}
+        {{ $filteredPages := slice }}
+        {{ range $allPages }}
+            {{ $fileName := .File.LogicalName }}
+            {{ if in $fileName $category }}
+                {{ $filteredPages = $filteredPages | append . }}
+            {{ end }}
+        {{ end }}
+        {{ $pages = $filteredPages }}
+    {{ end }}
+{{ end }}
+{{ if $tags }}
+    {{ $pages = where $pages "Params.tags" "intersect" $tags }}
+{{ end }}
+{{ if eq (len $pages) 0 }}
+    {{ $pages = slice }}
+{{ else }}
+    {{ $pages = first $limit ($pages.ByDate.Reverse) }}
+{{ end }}
+
+<section class="article-module">
+    <div class="container">
+        <div class="module-header">
+            <h2 class="module-title">{{ $title }}</h2>
+            <a href="{{ $viewAllLink }}" class="view-all">查看全部 <i class="fas fa-arrow-right"></i></a>
+        </div>
+        
+        <div class="articles-grid">
+            {{ range $pages }}
+            <article class="article-card">
+                {{ $imageUrl := .Params.featured_image | default .Params.image | default "" }}
+                {{ if $imageUrl }}
+                <div class="article-image">
+                    <img src="{{ $imageUrl }}" alt="{{ .Title }}" loading="lazy">
+                </div>
+                {{ else }}
+                <div class="article-image placeholder">
+                    <i class="fas fa-image"></i>
+                </div>
+                {{ end }}
+                
+                <div class="article-content">
+                    <div class="article-meta">
+                        {{ if .Params.tags }}
+                        <span class="article-tag">{{ index .Params.tags 0 }}</span>
+                        {{ end }}
+                    </div>
+                    
+                    <h3 class="article-title">
+                        <a href="{{ .Permalink }}">{{ .Title }}</a>
+                    </h3>
+                    
+                    <p class="article-excerpt">
+                        {{ .Summary | plainify | truncate 60 }}
+                    </p>
+                    
+                        <div class="article-footer">
+                        <span class="article-date">{{ .Date.Format "2006-01-02" }}</span>
+                        <a href="{{ .Permalink }}" class="read-more">
+                            <i class="fas fa-arrow-right"></i> 更多
+                        </a>
+                    </div>
+                </div>
+            </article>
+            {{ else }}
+            <div class="no-articles">暂无相关文章</div>
+            {{ end }}
+        </div>
+    </div>
+</section>

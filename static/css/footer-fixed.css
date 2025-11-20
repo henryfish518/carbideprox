@@ -1,0 +1,108 @@
+/* 简化版页脚样式 - 专门解决PC/移动端导航显示问题 */
+
+/* 默认状态：PC端显示，移动端隐藏 */
+.footer-nav, footer .footer-nav, footer.site-footer .footer-nav {
+  display: block !important;
+}
+
+.mobile-footer-nav, footer .mobile-footer-nav, footer.site-footer .mobile-footer-nav {
+  display: none !important;
+}
+
+.mobile-footer-copyright {
+  display: none !important;
+}
+
+/* 移动端：隐藏PC导航，显示移动导航 */
+@media (max-width: 768px) {
+  /* 完全隐藏桌面端页脚区域 */
+  .footer-main, .site-footer .footer-main, footer .footer-main {
+    display: none !important;
+  }
+  
+  .footer-nav, footer .footer-nav, footer.site-footer .footer-nav {
+    display: none !important;
+  }
+  
+  .mobile-footer-nav, footer .mobile-footer-nav, footer.site-footer .mobile-footer-nav {
+    display: flex !important;
+    justify-content: space-around !important;
+    position: fixed !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    background: #fff !important;
+    border-top: 1px solid #e9ecef !important;
+    padding: 12px 0 !important;
+    z-index: 1000 !important;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1) !important;
+  }
+  
+  .mobile-footer-links {
+    display: flex !important;
+    width: 100% !important;
+    list-style: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    justify-content: space-around !important;
+  }
+  
+  .mobile-footer-links li {
+    flex: 1 !important;
+    text-align: center !important;
+    max-width: 20% !important;
+  }
+  
+  .mobile-footer-links li a {
+    display: block !important;
+    text-decoration: none !important;
+    color: #333 !important;
+    font-size: 12px !important;
+    transition: color 0.3s ease !important;
+    padding: 5px 0 !important;
+    text-align: center !important;
+  }
+  
+  .mobile-footer-links li a:hover {
+    color: #2c5aa0 !important;
+  }
+  
+  .mobile-footer-copyright {
+    display: block !important;
+    padding: 70px 15px 20px !important; /* 为移动端底部菜单留出更多空间 */
+    text-align: center !important;
+    font-size: 12px !important;
+    color: #666 !important;
+    background: #f8f9fa !important;
+    line-height: 1.6 !important;
+  }
+  
+  .mobile-footer-copyright p {
+    margin: 5px 0 !important;
+  }
+  
+  .mobile-footer-copyright a {
+    color: #666 !important;
+    text-decoration: none !important;
+  }
+  
+  .mobile-footer-copyright a:hover {
+    color: #2c5aa0 !important;
+    text-decoration: underline !important;
+  }
+}
+
+/* PC端：显示PC导航，隐藏移动导航 */
+@media (min-width: 769px) {
+  .footer-nav, footer .footer-nav, footer.site-footer .footer-nav {
+    display: block !important;
+  }
+  
+  .mobile-footer-nav, footer .mobile-footer-nav, footer.site-footer .mobile-footer-nav {
+    display: none !important;
+  }
+  
+  .mobile-footer-copyright {
+    display: none !important;
+  }
+}

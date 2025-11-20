@@ -1,0 +1,96 @@
+/* 移动端文章列表修复 */
+@media (max-width: 768px) {
+  /* 确保文章网格正确显示 */
+  .articles-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 1rem !important;
+    margin-bottom: 2rem !important;
+  }
+  
+  /* 确保文章卡片正确显示 */
+  .article-card {
+    display: flex !important;
+    flex-direction: column !important;
+    background: white !important;
+    border-radius: 8px !important;
+    overflow: hidden !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+    margin-bottom: 1rem !important;
+  }
+  
+  /* 确保卡片图片正确显示 */
+  .card-image {
+    height: 180px !important;
+    overflow: hidden !important;
+    position: relative !important;
+  }
+  
+  .card-image img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+  }
+  
+  /* 确保卡片内容正确显示 */
+  .card-content {
+    padding: 1rem !important;
+    display: flex !important;
+    flex-direction: column !important;
+  }
+  
+  /* 确保卡片标题正确显示 */
+  .card-title {
+    font-size: 0.9rem !important;
+    line-height: 1.3 !important;
+    margin-bottom: 0.5rem !important;
+  }
+  
+  .card-title a {
+    color: #333 !important;
+    text-decoration: none !important;
+    display: -webkit-box !important;
+    -webkit-line-clamp: 3 !important;
+    -webkit-box-orient: vertical !important;
+    overflow: hidden !important;
+  }
+  
+  /* 确保卡片分类正确显示 */
+  .card-category {
+    color: #2c5aa0 !important;
+    font-size: 0.8rem !important;
+    font-weight: 600 !important;
+    margin-bottom: 0.5rem !important;
+  }
+}
+
+/* 小屏幕手机 */
+@media (max-width: 480px) {
+  .articles-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 0.8rem !important;
+  }
+  
+  .article-card {
+    margin-bottom: 0.8rem !important;
+  }
+  
+  .card-image {
+    height: 160px !important;
+  }
+  
+  .card-content {
+    padding: 0.8rem !important;
+  }
+  
+  .card-title {
+    font-size: 0.85rem !important;
+    line-height: 1.2 !important;
+    margin-bottom: 0.3rem !important;
+  }
+  
+  .card-category {
+    font-size: 0.75rem !important;
+    margin-bottom: 0.3rem !important;
+  }
+}

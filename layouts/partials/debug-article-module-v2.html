@@ -1,0 +1,52 @@
+<!-- 调试版本的文章模块 -->
+{{ $title := .title | default "文章列表" }}
+{{ $category := .category | default "" }}
+{{ $tags := .tags | default (slice "") }}
+{{ $limit := .limit | default 8 }}
+{{ $viewAllLink := .viewAllLink | default "#" }}
+{{ $site := .Site }}
+
+<!-- 定义分类映射：英文名到中文名 -->
+{{ $categoryMap := dict "yyjs" "电商运营技术" "zbrj" "电商直播软件" "dqrj" "店群软件" "cprj" "多多出评软件" }}
+{{ $categoryName := index $categoryMap $category | default $category }}
+
+<section class="article-module-debug" style="background: #f8f9fa; padding: 2rem; margin: 2rem 0; border-radius: 8px; border: 1px solid #ddd;">
+    <div class="container">
+        <h3 style="color: #333; margin-bottom: 1rem;">调试信息：{{ $title }}</h3>
+        <p style="color: #666; margin-bottom: 1rem;">分类参数: {{ $category }} (中文名: {{ $categoryName }})</p>
+        
+        <!-- 检查文章总数 -->
+        <p style="color: #666; margin-bottom: 1rem;">网站文章总数: {{ len $site.RegularPages }}</p>
+        
+        <!-- 检查中文分类名匹配 -->
+        {{ $cnCategoryPages := where $site.RegularPages "Params.categories" "intersect" (slice $categoryName) }}
+        <p style="color: #666; margin-bottom: 1rem;">中文分类名 "{{ $categoryName }}" 匹配文章数: {{ len $cnCategoryPages }}</p>
+        
+        <!-- 检查英文分类名匹配 -->
+        {{ $enCategoryPages := where $site.RegularPages "Params.categories" "intersect" (slice $category) }}
+        <p style="color: #666; margin-bottom: 1rem;">英文分类名 "{{ $category }}" 匹配文章数: {{ len $enCategoryPages }}</p>
+        
+        <!-- 显示前5篇匹配的文章标题 -->
+        <h4 style="color: #333; margin-bottom: 0.5rem;">匹配到的文章示例:</h4>
+        <ul style="color: #666; padding-left: 20px;">
+            {{ range first 5 $cnCategoryPages }}
+                <li>{{ .Title }} (路径: {{ .File.Path }})</li>
+            {{ end }}
+        </ul>
+        
+        <!-- 如果没有文章，显示所有分类 -->
+        {{ if not $cnCategoryPages }}
+            <h4 style="color: #333; margin-bottom: 0.5rem;">网站中所有分类:</h4>
+            <ul style="color: #666; padding-left: 20px;">
+                {{ range $site.RegularPages }}
+                    {{ range .Params.categories }}
+                        <li>{{ . }} - 来自文章: {{ $.Title }}</li>
+                    {{ end }}
+                {{ end }}
+            </ul>
+        {{ end }}
+    </div>
+</section>
+
+<!-- 实际的文章模块 -->
+{{ partial "article-module.html" . }}

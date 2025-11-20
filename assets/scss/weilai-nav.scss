@@ -1,0 +1,182 @@
+// Weilai主题导航栏样式
+
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: #ffffff;
+  border-bottom: 1px solid #e0e0e0;
+  z-index: 1000;
+  transition: all var(--transition-normal);
+  
+  .navbar-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 70px;
+  }
+  
+  // Logo区域
+  .navbar-brand {
+    .logo-link {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+      
+      .logo-img {
+        height: 35px;
+        width: auto;
+      }
+      
+      .logo-text {
+        font-family: var(--font-accent);
+        font-size: 1.6rem;
+        font-weight: 700;
+        color: #333333;
+      }
+    }
+  }
+  
+  // 主导航菜单
+  .navbar-menu {
+    .nav-links {
+      display: flex;
+      gap: 40px;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      
+      .nav-item {
+        .nav-link {
+          display: block;
+          padding: 10px 0;
+          color: #666666;
+          font-weight: 500;
+          font-size: 1rem;
+          text-decoration: none;
+          transition: color var(--transition-fast);
+          
+          &:hover, &.active {
+            color: #333333;
+          }
+        }
+      }
+    }
+  }
+  
+  // 右侧功能区域
+  .navbar-actions {
+    .mobile-menu-toggle {
+      display: none;
+      flex-direction: column;
+      gap: 4px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      
+      span {
+        width: 25px;
+        height: 2px;
+        background: #333333;
+        transition: all var(--transition-fast);
+      }
+    }
+  }
+  
+  // 移动端菜单
+  .mobile-menu {
+    display: none;
+    position: absolute;
+    top: 70px;
+    left: 0;
+    width: 100%;
+    background: #ffffff;
+    border-top: 1px solid #e0e0e0;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height var(--transition-normal);
+    
+    &.active {
+      max-height: 300px;
+    }
+    
+    .mobile-nav-links {
+      list-style: none;
+      margin: 0;
+      padding: 20px;
+      
+      .mobile-nav-item {
+        margin-bottom: 15px;
+        
+        &:last-child {
+          margin-bottom: 0;
+        }
+        
+        .mobile-nav-link {
+          display: block;
+          padding: 10px 15px;
+          color: #666666;
+          font-weight: 500;
+          text-decoration: none;
+          border-radius: 8px;
+          transition: all var(--transition-fast);
+          
+          &:hover {
+            background: #f5f5f5;
+            color: #333333;
+          }
+        }
+      }
+    }
+  }
+  
+  // 滚动状态
+  &.scrolled {
+    background: #ffffff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+}
+
+// 响应式设计
+@media (max-width: 992px) {
+  .navbar {
+    .navbar-menu {
+      display: none;
+    }
+    
+    .navbar-actions {
+      .mobile-menu-toggle {
+        display: flex;
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    .navbar-content {
+      height: 60px;
+    }
+    
+    .navbar-brand {
+      .logo-text {
+        font-size: 1.4rem;
+      }
+    }
+  }
+}
+
+@media (max-width: 576px) {
+  .navbar {
+    .navbar-content {
+      height: 55px;
+    }
+    
+    .navbar-brand {
+      .logo-text {
+        font-size: 1.3rem;
+      }
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{{/* 获取文章封面图片，如果没有则随机选择默认封面 */}}
+{{ $coverImage := "" }}
+{{ $defaultCovers := slice "/default-covers/cover-1.jpg" "/default-covers/cover-2.jpg" "/default-covers/cover-3.jpg" "/default-covers/cover-4.jpg" "/default-covers/cover-5.jpg" "/default-covers/cover-6.jpg" "/default-covers/cover-7.jpg" "/default-covers/cover-8.jpg" "/default-covers/cover-9.jpg" "/default-covers/cover-10.jpg" }}
+
+{{/* 检查文章是否有封面图片 */}}
+{{ if .Params.image }}
+  {{ $coverImage = .Params.image }}
+{{ else if .Params.thumbnail }}
+  {{ $coverImage = .Params.thumbnail }}
+{{ else if .Params.cover }}
+  {{ $coverImage = .Params.cover }}
+{{ else if .Resources.GetMatch "*cover*" }}
+  {{ $coverImage = .Resources.GetMatch "*cover*" }}
+{{ else }}
+  {{/* 如果没有封面图片，随机选择一张默认封面 */}}
+  {{ $randomIndex := mod (now.UnixNano) (len $defaultCovers) }}
+  {{ $coverImage = index $defaultCovers $randomIndex }}
+{{ end }}
+
+{{/* 返回封面图片路径 */}}
+{{ return $coverImage }}

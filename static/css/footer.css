@@ -1,0 +1,205 @@
+/* 页脚样式 - 响应式设计 */
+.site-footer {
+  margin-top: 2rem;
+}
+
+/* 页脚内容 */
+.site-footer .footer-main {
+  background: #f8f9fa;
+  color: #333;
+  padding: 2rem 0;
+  border-top: 1px solid #e9ecef;
+  font-size: 0.9rem;
+}
+
+.site-footer .footer-nav {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.site-footer .footer-nav .footer-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+.site-footer .footer-nav .footer-links li {
+  margin: 0;
+}
+
+.site-footer .footer-nav .footer-links li a {
+  color: #333;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: color 0.3s ease;
+  position: relative;
+}
+
+.site-footer .footer-nav .footer-links li a:hover {
+  color: var(--primary-color);
+  text-decoration: underline;
+}
+
+.site-footer .footer-copyright {
+  text-align: center;
+}
+
+.site-footer .footer-copyright p {
+  margin: 0.5rem 0;
+  font-size: 0.8rem;
+  color: #666;
+  line-height: 1.4;
+}
+
+.site-footer .footer-copyright a {
+  color: #666;
+  text-decoration: none;
+}
+
+.site-footer .footer-copyright a:hover {
+  color: var(--primary-color);
+  text-decoration: underline;
+}
+
+/* 回到顶部按钮 */
+.site-footer .back-to-top {
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+  width: 40px;
+  height: 40px;
+  background: var(--primary-color);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  z-index: 999;
+  display: none;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.site-footer .back-to-top:hover {
+  opacity: 1;
+  transform: translateY(-5px);
+}
+
+.site-footer .back-to-top i {
+  font-size: 1rem;
+}
+
+/* 移动端样式 - 媒体查询 */
+@media (max-width: 768px) {
+  /* 确保移动端页脚内容可见 */
+  .site-footer .footer-main {
+    display: block;
+  }
+  
+  .site-footer .footer-nav {
+    margin-bottom: 1rem;
+  }
+  
+  .site-footer .footer-nav .footer-links {
+    gap: 1rem;
+  }
+  
+  .site-footer .footer-nav .footer-links li a {
+    font-size: 0.8rem;
+    padding: 0.3rem 0.5rem;
+  }
+  
+  .site-footer .footer-copyright {
+    display: block;
+  }
+  
+  .site-footer .footer-copyright p {
+    font-size: 0.75rem;
+  }
+  
+  .site-footer .back-to-top {
+    bottom: 20px;
+    width: 36px;
+    height: 36px;
+  }
+}
+
+/* PC端样式 - 媒体查询 */
+@media (min-width: 769px) {
+  .site-footer .footer-main {
+    padding: 3rem 0;
+    background: linear-gradient(to bottom, #f8f9fa, #f1f3f5);
+  }
+  
+  .site-footer .footer-nav {
+    margin-bottom: 2rem;
+  }
+  
+  .site-footer .footer-nav .footer-links {
+    gap: 2rem;
+  }
+  
+  /* 增强PC端页脚链接样式 */
+  .site-footer .footer-nav .footer-links li a {
+    padding: 0.5rem 0.75rem;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+  }
+  
+  /* PC端页脚悬停效果增强 */
+  .site-footer .footer-nav .footer-links li a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background-color: var(--primary-color);
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+  }
+  
+  .site-footer .footer-nav .footer-links li a:hover::after {
+    width: 80%;
+  }
+  
+  .site-footer .footer-nav .footer-links li a:hover {
+    background-color: rgba(44, 90, 160, 0.05);
+    transform: translateY(-2px);
+  }
+  
+  /* 版权信息优化 */
+  .site-footer .footer-copyright {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #e9ecef;
+  }
+  
+  .site-footer .footer-copyright p {
+    font-size: 0.85rem;
+  }
+  
+  /* 回到顶部按钮优化 */
+  .site-footer .back-to-top:hover {
+    box-shadow: 0 4px 12px rgba(44, 90, 160, 0.3);
+  }
+  
+  /* 添加页脚微光效果 */
+  .site-footer .footer-main::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--primary-color), transparent);
+    opacity: 0.3;
+  }
+}

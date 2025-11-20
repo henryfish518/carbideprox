@@ -1,0 +1,151 @@
+/* 简化页脚样式 - 直接控制显示/隐藏 */
+
+/* 默认隐藏所有页脚元素 */
+.footer-main {
+  display: none;
+}
+
+.mobile-footer-nav {
+  display: none;
+}
+
+.mobile-footer-copyright {
+  display: none;
+}
+
+/* PC端样式 */
+@media (min-width: 769px) {
+  .footer-main {
+    display: block !important;
+    background: #f8f9fa;
+    color: #333;
+    padding: 1.5rem 0;
+    border-top: 1px solid #e9ecef;
+    font-size: 0.9rem;
+  }
+  
+  .footer-nav {
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+  
+  .footer-nav .footer-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+  }
+  
+  .footer-nav .footer-links li a {
+    color: #333;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: color 0.3s ease;
+  }
+  
+  .footer-nav .footer-links li a:hover {
+    color: var(--primary-color);
+    text-decoration: underline;
+  }
+  
+  .footer-copyright {
+    text-align: center;
+  }
+  
+  .footer-copyright p {
+    margin: 0.25rem 0;
+    font-size: 0.8rem;
+    color: #888;
+    line-height: 1.4;
+  }
+  
+  .footer-copyright a {
+    color: #666;
+    text-decoration: none;
+  }
+  
+  .footer-copyright a:hover {
+    color: var(--primary-color);
+    text-decoration: underline;
+  }
+}
+
+/* 移动端样式 */
+@media (max-width: 768px) {
+  /* 完全隐藏PC端页脚 */
+  .footer-main {
+    display: none !important;
+  }
+  
+  /* 显示移动端导航 */
+  .mobile-footer-nav {
+    display: flex !important;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #fff;
+    border-top: 1px solid #e9ecef;
+    padding: 12px 0;
+    z-index: 1000;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .mobile-footer-links {
+    display: flex;
+    width: 100%;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    justify-content: space-around;
+  }
+  
+  .mobile-footer-links li {
+    flex: 1;
+    text-align: center;
+    max-width: 20%;
+  }
+  
+  .mobile-footer-links li a {
+    display: block;
+    text-decoration: none;
+    color: #333;
+    font-size: 12px;
+    transition: color 0.3s ease;
+    padding: 5px 0;
+    text-align: center;
+  }
+  
+  .mobile-footer-links li a:hover {
+    color: #2c5aa0;
+  }
+  
+  /* 显示移动端版权信息 */
+  .mobile-footer-copyright {
+    display: block !important;
+    padding: 70px 15px 20px;
+    text-align: center;
+    font-size: 12px;
+    color: #666;
+    background: #f8f9fa;
+    line-height: 1.6;
+  }
+  
+  .mobile-footer-copyright p {
+    margin: 5px 0;
+  }
+  
+  .mobile-footer-copyright a {
+    color: #666;
+    text-decoration: none;
+  }
+  
+  .mobile-footer-copyright a:hover {
+    color: #2c5aa0;
+    text-decoration: underline;
+  }
+}

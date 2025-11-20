@@ -1,0 +1,75 @@
+<!-- 最终调试模块 -->
+{{ $title := .title | default "文章列表" }}
+{{ $category := .category | default "" }}
+{{ $site := .Site }}
+
+<!-- 定义分类映射：英文名到中文名 -->
+{{ $categoryMap := dict "yyjs" "电商运营技术" "zbrj" "电商直播软件" "dqrj" "店群软件" "cprj" "多多出评软件" }}
+{{ $categoryName := index $categoryMap $category | default $category }}
+
+<!-- 筛选文章 -->
+{{ $pages := where $site.RegularPages "Params.categories" "intersect" (slice $categoryName) }}
+
+<!-- 检查条件 -->
+{{ $hasPages := gt (len $pages) 0 }}
+
+<section class="article-module">
+    <div class="container">
+        <div class="module-header">
+            <h2 class="module-title">{{ $title }}</h2>
+            <a href="{{ .viewAllLink }}" class="view-all">查看全部 <i class="fas fa-arrow-right"></i></a>
+        </div>
+        
+        <div class="articles-grid">
+            {{ if $hasPages }}
+                {{ range first 8 ($pages.ByDate.Reverse) }}
+                <article class="article-card">
+                    {{ $imageUrl := .Params.featured_image | default .Params.image | default "" }}
+                    {{ if $imageUrl }}
+                    <div class="article-image">
+                        <img src="{{ $imageUrl }}" alt="{{ .Title }}" loading="lazy">
+                    </div>
+                    {{ else }}
+                    <div class="article-image placeholder">
+                        <i class="fas fa-image"></i>
+                    </div>
+                    {{ end }}
+                    
+                    <div class="article-content">
+                        <div class="article-meta">
+                            <span class="article-date">{{ .Date.Format "01-02" }}</span>
+                            {{ if .Params.tags }}
+                            <span class="article-tag">{{ index .Params.tags 0 }}</span>
+                            {{ end }}
+                        </div>
+                        
+                        <h3 class="article-title">
+                            <a href="{{ .Permalink }}">{{ .Title }}</a>
+                        </h3>
+                        
+                        <p class="article-excerpt">
+                            {{ .Summary | plainify | truncate 60 }}
+                        </p>
+                        
+                        <div class="article-footer">
+                            <div class="article-stats">
+                                <span class="stat">
+                                    <i class="fas fa-eye"></i> {{ .Params.views | default 0 }}
+                                </span>
+                                <span class="stat">
+                                    <i class="fas fa-download"></i> {{ .Params.downloads | default 0 }}
+                                </span>
+                            </div>
+                            <a href="{{ .Permalink }}" class="read-more">
+                                <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                </article>
+                {{ end }}
+            {{ else }}
+                <div class="no-articles">暂无相关文章 (调试信息: 共找到 {{ len $pages }} 篇文章)</div>
+            {{ end }}
+        </div>
+    </div>
+</section>

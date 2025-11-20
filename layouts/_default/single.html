@@ -1,0 +1,204 @@
+{{ define "main" }}
+
+<!-- 文章标题区域 -->
+<header class="article-header">
+    <div class="container">
+        <div class="article-breadcrumb">
+            <a href="/">首页</a>
+            {{ if .Params.categories }}
+            <i class="fas fa-angle-right"></i>
+            <a href="/{{ index .Params.categories 0 | urlize }}/">{{ index .Params.categories 0 }}</a>
+            {{ end }}
+            <i class="fas fa-angle-right"></i>
+            <span class="current">{{ .Title }}</span>
+        </div>
+        
+        <h1 class="article-title">{{ .Title }}</h1>
+        
+        <div class="article-meta">
+            <span class="meta-item">
+                <i class="fas fa-calendar-alt"></i>
+                {{ .Date.Format "2006-01-02" }}
+            </span>
+            <span class="meta-item">
+                <i class="fas fa-user"></i>
+                霖哥电商
+            </span>
+            <span class="meta-item">
+                <i class="fas fa-eye"></i>
+                {{ if .Params.views }}{{ .Params.views }}{{ else }}1.2k{{ end }} 阅读
+            </span>
+            {{ if .Params.tags }}
+            <div class="article-tags">
+                {{ range .Params.tags }}
+                <span class="tag">{{ . }}</span>
+                {{ end }}
+            </div>
+            {{ end }}
+        </div>
+    </div>
+</header>
+
+<!-- 文章内容两列布局 -->
+<div class="article-content-wrapper">
+    <div class="container">
+        <div class="article-layout">
+            <!-- 左侧75%内容区域 -->
+            <main class="article-main">
+                <!-- 文章特色图片 -->
+                {{ if .Params.featured_image }}
+                <div class="article-featured-image">
+                    <img src="{{ .Params.featured_image }}" alt="{{ .Title }}" loading="lazy">
+                </div>
+                {{ end }}
+                
+                <!-- 文章正文 -->
+                <div class="article-body">
+                    {{ .Content }}
+                </div>
+                
+                <!-- 文章底部信息 -->
+                <div class="article-footer">
+                    <div class="article-share">
+                        <span class="share-label">分享到：</span>
+                        <a href="#" class="share-btn">
+                            <i class="fab fa-weixin"></i>
+                        </a>
+                        <a href="#" class="share-btn">
+                            <i class="fab fa-qq"></i>
+                        </a>
+                        <a href="#" class="share-btn">
+                            <i class="fab fa-weibo"></i>
+                        </a>
+                    </div>
+                    
+                    {{ if .Params.vip }}
+                    <div class="vip-notice">
+                        <i class="fas fa-crown"></i>
+                        <span>本文为VIP会员专属内容，<a href="#">开通VIP</a>即可查看完整内容</span>
+                    </div>
+                    {{ end }}
+                </div>
+                
+                <!-- 相似文章 -->
+                {{ $related := .Site.RegularPages.Related . | first 6 }}
+                {{ if gt (len $related) 0 }}
+                <section class="related-articles">
+                    <h3 class="related-title">
+                        <i class="fas fa-bookmark"></i>
+                        相关推荐
+                    </h3>
+                    <div class="related-grid">
+                        {{ range $related }}
+                        <article class="related-card">
+                            {{ $imageUrl := .Params.featured_image | default .Params.image | default "" }}
+                            {{ if $imageUrl }}
+                            <div class="related-image">
+                                <img src="{{ $imageUrl }}" alt="{{ .Title }}" loading="lazy">
+                            </div>
+                            {{ else }}
+                            <div class="related-image placeholder">
+                                <i class="fas fa-image"></i>
+                            </div>
+                            {{ end }}
+                            <div class="related-content">
+                                <h4 class="related-title">
+                                    <a href="{{ .Permalink }}">{{ .Title }}</a>
+                                </h4>
+                                <div class="related-meta">
+                                    <span class="related-date">{{ .Date.Format "01-02" }}</span>
+                                    {{ if .Params.views }}
+                                    <span class="related-views">{{ .Params.views }} 阅读</span>
+                                    {{ end }}
+                                </div>
+                            </div>
+                        </article>
+                        {{ end }}
+                    </div>
+                </section>
+                {{ end }}
+            </main>
+            
+            <!-- 右侧25%边栏 -->
+            <aside class="article-sidebar">
+                <!-- 分类导航 -->
+                <div class="sidebar-section">
+                    <h4 class="sidebar-title">
+                        <i class="fas fa-list"></i>
+                        分类导航
+                        <i class="fas fa-chevron-down toggle-icon"></i>
+                    </h4>
+                    <div class="category-dropdown">
+                        <a href="/" class="category-item {{ if not .Section }}active{{ end }}">
+                            全部文章
+                        </a>
+                        
+                        <a href="/cprj/" class="category-item {{ if eq .Section "cprj" }}active{{ end }}">
+                            多多出评软件
+                        </a>
+                        
+                        <a href="/dqrj/" class="category-item {{ if eq .Section "dqrj" }}active{{ end }}">
+                            店群软件
+                        </a>
+                        
+                        <a href="/yyjs/" class="category-item {{ if eq .Section "yyjs" }}active{{ end }}">
+                            电商运营技术
+                        </a>
+                        
+                        <a href="/zbrj/" class="category-item {{ if eq .Section "zbrj" }}active{{ end }}">
+                            电商直播软件
+                        </a>
+                        
+                        <a href="/hydt/" class="category-item {{ if eq .Section "hydt" }}active{{ end }}">
+                            行业动态
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- 最新文章 -->
+                <div class="sidebar-section">
+                    <h4 class="sidebar-title">
+                        <i class="fas fa-fire"></i>
+                        最新文章
+                    </h4>
+                    <div class="latest-articles">
+                        {{ range first 5 (where site.RegularPages "Section" .Section).ByDate.Reverse }}
+                        <article class="latest-item">
+                            {{ $imageUrl := .Params.featured_image | default .Params.image | default "" }}
+                            {{ if $imageUrl }}
+                            <div class="latest-image">
+                                <img src="{{ $imageUrl }}" alt="{{ .Title }}" loading="lazy">
+                            </div>
+                            {{ else }}
+                            <div class="latest-image placeholder">
+                                <i class="fas fa-image"></i>
+                            </div>
+                            {{ end }}
+                            <div class="latest-content">
+                                <h5 class="latest-title">
+                                    <a href="{{ .Permalink }}">{{ .Title }}</a>
+                                </h5>
+                                <span class="latest-date">{{ .Date.Format "01-02" }}</span>
+                            </div>
+                        </article>
+                        {{ end }}
+                    </div>
+                </div>
+                
+                <!-- 二维码 -->
+                <div class="sidebar-section">
+                    <h4 class="sidebar-title">
+                        <i class="fas fa-qrcode"></i>
+                        扫码加好友
+                    </h4>
+                    <div class="qr-code">
+                        <img src="https://66868344.ds120.cn/lgewm.jpg" alt="扫码加好友" loading="lazy">
+                        <p class="qr-desc">扫码添加客服微信<br>获取最新软件资源</p>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </div>
+</div>
+
+{{ end }}

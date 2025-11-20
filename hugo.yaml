@@ -1,0 +1,342 @@
+baseURL: https://51qpm.cn/
+title: 未来科技
+description: 未来科技探索平台，致力于为您提供最前沿的技术资源、创新的解决方案和专业的科技资讯
+# theme: ri_theme # [docs] # 主题目录 - 已合并到根目录，移除主题引用
+# cSpell : ignore goldmark github hugo readingtime docs subdir lastmod pygments linenos catmullrom norsk gu fortawesome fontawesome webfonts
+# 语言设置
+contentDir: content
+minifyOutput: true
+defaultContentLanguage: zh
+defaultContentLanguageInSubdir: false
+
+# 分页配置
+pagination:
+  pagerSize: 20
+  path: page
+# 翻译时有用。
+enableMissingTranslationPlaceholders: true
+# 是否启用生成robots.txt文件。默认为 false
+enableRobotsTXT: true
+# 将为 .Lastmod 等提供值。
+enableGitInfo: false
+# 取消注释以禁用 Docsy 中的分类
+# disableKinds: [taxonomy]
+# 您可以添加自己的分类法
+taxonomies:
+  tag: tags
+  category: categories
+# 高亮配置
+pygmentsCodeFences: true
+pygmentsUseClasses: false
+# 在 Hugo 中使用新的 Chroma Go 高亮器。
+pygmentsUseClassic: false
+# pygments 选项："linenos=table"
+# 参考 https://help.farbox.com/pygments.html
+pygmentsStyle: tango
+# 配置每个部分的 URL 格式。
+# permalinks:
+#   blog: /:id/
+#  blog = "/:id.html"
+#   blog: /:section/:year/:month/:day/:slug/
+# 图像处理配置。
+imaging:
+  resampleFilter: CatmullRom
+  quality: 75
+  anchor: Smart
+# 语言配置
+languages:
+  zh:
+    languageName: 简体中文
+    title: 霖哥电商
+    params:
+      keywords: AI直播软件, 霖哥推荐, 直播工具, 自动应答系统
+      description: 霖哥电商 - 专业的电商知识分享平台
+      time_format_default: 2006/01/02 15:04
+      time_format_blog: 2006/01/02 15:04
+
+    # 主菜单配置
+    menu:
+      main:
+        - name: "🏠 首页"
+          url: "/"
+          weight: 10
+        
+        - name: "📦 多多出评软件"
+          url: "/cprj/"
+          weight: 20
+          
+        - name: "🏪 店群软件"
+          url: "/dqrj/"
+          weight: 21
+          
+        - name: "📊 电商运营技术"
+          url: "/yyjs/"
+          weight: 22
+          
+        - name: "📹 电商直播软件"
+          url: "/zbrj/"
+          weight: 23
+        
+        - name: "📖 软件下载"
+          url: "https://66868344.cn/"
+          weight: 30
+        
+        - name: "📄 关于我们"
+          url: "/about/"
+          weight: 40       
+
+
+  en:
+    languageName: English
+    contentDir: content/en
+    title: 霖哥电商
+    params:
+      description: 霖哥电商 - 专业的电商知识分享平台
+
+markup:
+  goldmark:
+    parser:
+      attribute:
+        block: true
+    # extensions:
+    #   passthrough:
+    #     enable: true
+    #     delimiters:
+    #       block: [['\[', '\]'], ['$$', '$$']]
+    #       inline: [['\(', '\)']]
+    renderer:
+      unsafe: true
+  highlight:
+    # 完整样式列表请参考 https://xyproto.github.io/splash/docs/all.html
+    style: gruvbox-light
+    # 如果希望为未指定语言的代码块使用所选高亮样式，请取消注释
+    guessSyntax: true
+    # noClasses: false # Required for dark-mode
+# 以下内容均为站点参数
+# 如果不需要启用“打印整个部分”链接，请取消注释。
+# outputs:
+#   home: [HTML]
+#   page: [HTML]
+#   section: [HTML, print, RSS]
+params:
+# 后加的3条
+  # github_subdir: userguide
+  # offlineSearchSummaryLength: 70
+  # offlineSearchMaxResults: 10
+  # plantuml:
+  #   enable: true
+  #   theme: default
+  #   svg_image_url: https://www.plantuml.com/plantuml/svg/
+  #   svg: false
+  # print:
+  #   disable_toc: false
+  # markmap:
+  #   enable: true
+  # drawio:
+  #   enable: true
+  # cSpell:ignore docsy github goldmark markmap plantuml readingtime userguide
+  time_format_blog: Monday, January 02, 2006
+  time_format_default: January 2, 2006
+  rss_sections: [blog] # TODO: drop since this is the default
+  taxonomy:
+    # 设置 taxonomyCloud = [] 以隐藏分类云
+    taxonomyCloud: [tags, categories]
+    # 如果使用，长度必须与 taxonomyCloud 相同
+    taxonomyCloudTitle: [Tag Cloud, Categories]
+    # 设置 taxonomyPageHeader = [] 以隐藏页面标题中的分类法
+    taxonomyPageHeader: [tags, categories]
+  # privacy_policy: /privacy
+  # 如果页面未设置，则第一个图像将用作 Twitter 卡片图像。
+  # images: [images/project-illustration.png]
+  # 如果导航栏有版本选择器以访问旧版本站点，则为菜单标题。
+  # 此菜单仅在设置了至少一个 [params.versions] 时显示。
+  version_menu: Releases
+  # 在"版本横幅"部分中使用的标志，用于决定是否在每个页面上显示
+  # 指示这是文档的存档版本的横幅。
+  # 如果要显示横幅，请将此标志设置为 "true"。
+  archived_version: false
+  # 此文档集中表示的文档版本号。
+  # 在"版本横幅"部分中使用，用于显示当前文档集的版本号。
+  version: 0.0
+  # 指向文档最新版本的链接。在"版本横幅"部分中使用，
+  # 用于引导用户访问主文档站点。
+  # url_latest_version: https://example.com
+  # 仓库配置（用于页面内链接以打开问题和建议更改的 URL）
+  # github_repo: https://cnb.cool/WorkSpaces/docsy/-
+  # 可选的相关项目仓库链接。例如，存放产品代码的兄弟仓库。
+  # github_project_repo: https://cnb.cool/W3C/docsy/-
+  # 如果内容目录不在仓库根目录中，请在此指定值
+  # GitHub 子目录：""
+  # 如果您的 GitHub 仓库默认分支不是 "main"，请取消注释此行，
+  # 或指定新值以引用其他分支。
+  github_branch: main
+  # Google 自定义搜索引擎 ID。删除或注释以禁用搜索。
+  # gcs_engine_id: d72aa9b2712488cc3 # cSpell:disable-line
+  # 启用 Lunr.js 离线搜索
+  offlineSearch: false
+  # docsearch
+  search:
+    algolia:
+      appId: P0DO4BA8CK
+      apiKey: d1faae509f380cf8e70b21d75dfe6e87
+      indexName: hugo
+      askAi: bX4Pdh32pzMP
+  # 使用 Prism 启用代码块的语法高亮和复制按钮
+  prism_syntax_highlighting: false
+  copyright:
+    authors: © Copyright - All rights reserved 霖哥电商
+    from_year:
+    beian: "2025湘ICP备2025141803号-2"
+  # 页脚菜单配置
+  menu:
+    - name: "隐私政策"
+      url: "/privacy/"
+    
+    - name: "服务条款"
+      url: "/terms/"
+    
+    - name: "站点地图"
+      url: "/sitemap.xml"
+    
+    - name: "免责声明"
+      url: "/disclaimer/"
+  
+  # 社交媒体链接
+  social:
+    qq: "6666666"
+    wechat: "https://51qpm.cn/weixin"
+    weibo: "https://weibo.com/ds120"
+    github: "https://github.com"
+  # 网站描述
+  description: 霖哥电商 - 专业的电商知识分享平台
+  
+  # 默认封面图片（图床链接）
+  default_cover_images:
+    - "https://picsum.photos/seed/cover1/400/300.jpg"
+    - "https://picsum.photos/seed/cover2/400/300.jpg"
+    - "https://picsum.photos/seed/cover3/400/300.jpg"
+    - "https://picsum.photos/seed/cover4/400/300.jpg"
+    - "https://picsum.photos/seed/cover5/400/300.jpg"
+    - "https://picsum.photos/seed/cover6/400/300.jpg"
+    - "https://picsum.photos/seed/cover7/400/300.jpg"
+    - "https://picsum.photos/seed/cover8/400/300.jpg"
+    - "https://picsum.photos/seed/cover9/400/300.jpg"
+    - "https://picsum.photos/seed/cover10/400/300.jpg"
+  # 用户界面配置
+  ui:
+    # 设置为 true 以禁用面包屑导航。
+    breadcrumb_disable: false
+    # 如果不想在顶部导航栏显示标志 (/assets/icons/logo.svg)，请设置为 false
+    navbar_logo: true
+    # 如果不想让顶部导航栏在 `block/cover` 上透明（如主页），请设置为 true
+    navbar_translucent_over_cover_disable: false
+    # 亮/暗模式
+    showLightDarkModeMenu: true
+    # 启用以显示紧凑状态的侧边栏菜单。
+    sidebar_menu_compact: true
+    ul_show: 1
+    sidebar_menu_foldable: true
+    sidebar_cache_limit: 2000
+    sidebar_menu_truncate: 0
+    # 设置为 true 以隐藏侧边栏搜索框（如果搜索启用，顶部导航搜索框仍会显示）
+    sidebar_search_disable: false
+    # 在每个文档底部添加标题为 "反馈" 的 H2 部分。响应将作为事件发送到 Google Analytics。
+    # 此功能依赖于 [services.googleAnalytics]，如果未设置 "services.googleAnalytics.id"，则会被禁用。
+    # 如果你想使用此功能，但偶尔需要从单个页面中移除"反馈"部分，
+    # 请在页面的前置元数据中添加 "hide_feedback: true"。
+    feedback:
+      enable: true
+      # 用户点击 "是"（页面有帮助）或 "否"（页面无帮助）后看到的响应。
+      'yes': >-
+        很高兴收到这个消息！感谢点赞。
+      'no': >-
+        很遗憾没帮到你。请<a href="https://51qpm.cn">告诉我们如何改进</a>。
+    # 在每个文档顶部添加阅读时间。
+    # 如果你想使用此功能，但偶尔需要从单个页面中移除阅读时间，
+    # 请在页面的前置元数据中添加 "hide_readingtime: true"
+    readingtime:
+      enable: false
+  links:
+    # 最终用户相关链接。这些将显示在页脚左侧和社区页面（如果有）。
+    user:
+      - name: GitHub
+        url: 
+        icon: fa-brands fa-github
+        desc: 来自其他用户的讨论和帮助
+      - name: 推特
+        url: 
+        icon: fab fa-twitter
+        desc: 在Twitter上关注我们获取最新消息
+      - name: 堆栈溢出
+        url: 
+        icon: fab fa-stack-overflow
+        desc: 实用问题和精选答案
+    # 开发者相关链接。这些将显示在页脚右侧和社区页面（如果有）。
+    developer:
+      - name: 邮箱
+        url: 
+        icon: fa fa-envelope
+        desc: 交流
+      - name: 微信
+        url: 
+        icon: fa-brands fa-weixin
+        desc: 交流
+      - name: QQ
+        url: 
+        icon: fa-brands fa-qq
+        desc: 交流
+module:
+  # 取消注释下一行以使用在命名 Hugo 工作区中声明的本地 docsy 克隆进行构建和服务。
+  # workspace: docsy.work
+  hugoVersion:
+    extended: true
+    min: 0.150.0
+
+
+  mounts:
+    - source: assets
+      target: assets
+    - source: node_modules/bootstrap
+      target: assets/vendor/bootstrap
+    - source: node_modules/@fortawesome/fontawesome-free
+      target: assets/vendor/Font-Awesome
+    - source: i18n
+      target: i18n
+    - source: layouts
+      target: layouts
+    - source: static
+      target: static
+    - source: node_modules/@fortawesome/fontawesome-free/webfonts
+      target: static/webfonts
+    # Mounts for projects using Docsy as an NPM package. The source path prefix
+    # "../.." moves out of themes/docsy so that Docsy can find its dependencies.
+    - source: ../../node_modules/bootstrap
+      target: assets/vendor/bootstrap
+    - source: ../../node_modules/@fortawesome/fontawesome-free
+      target: assets/vendor/Font-Awesome
+    - source: ../../node_modules/@fortawesome/fontawesome-free/webfonts
+      target: static/webfonts
+    # Mounts for module installations,
+    # needed to work around a known bug in Go’s module management.
+    - source: assets/_vendor/bootstrap/scss
+      target: assets/vendor/bootstrap/scss/vendor
+build:
+  # 启用模块本地缓存
+  writeStats: true
+  # 使用本地vendor目录
+  buildStats:
+    enable: true
+
+# 后加的
+# outputFormats:
+#   PRINT:
+#     baseName: index
+#     isHTML: true
+#     mediaType: text/html
+#     path: _print
+#     permalinkable: false
+# ignoreLogs:
+#   # 修复：找到一个更好的方式来编码“项目”页面，而不是不得不忽略警告。
+#   - warning-frontmatter-params-overrides # cSpell:disable-line
+
+# hugo server

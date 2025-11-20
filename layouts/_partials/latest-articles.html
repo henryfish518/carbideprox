@@ -1,0 +1,74 @@
+{{/* 
+  修复后的最新文章列表部分模板
+  解决了文章不显示的问题
+*/}}
+
+{{/* 检查是否传递了context参数，如果没有，使用当前上下文 */}}
+{{ $context := .context | default . }}
+
+{{/* 获取参数，使用默认值 */}}
+{{ $count := .count | default 3 }}
+{{ $section := .section | default "blog" }}
+{{ $title := .title | default "最新文章" }}
+
+{{/* 
+  从正确的上下文中获取文章
+  使用$.Site.RegularPages确保能访问到全站的文章
+*/}}
+{{ $latestPosts := where $context.Site.RegularPages "Section" $section | first $count }}
+
+{{/* 调试信息 - 可以帮助排查问题 */}}
+{{/*
+<div class="alert alert-info">
+  <strong>调试信息：</strong><br>
+  Section: {{ $section }}<br>
+  找到的文章数量: {{ len $latestPosts }}<br>
+  总文章数量: {{ len $context.Site.RegularPages }}
+</div>
+*/}}
+
+{{ if $latestPosts }}
+<div class="latest-articles my-5">
+  <h2 class="mb-4">{{ $title }}</h2>
+  
+  <div class="row g-3">
+    {{ range $latestPosts }}
+    <div class="col-12">
+      <div class="d-flex align-items-start p-4 rounded mb-3 bg-light-subtle hover:shadow-sm transition-all">
+        {{/* 文章缩略图 */}}
+        {{ if .Params.image }}
+        <div class="flex-shrink-0 me-4">
+          <img src="{{ .Params.image | absURL }}" width="100" height="75" class="object-cover rounded" alt="{{ .Title }}">
+        </div>
+        {{ end }}
+        
+        <div class="flex-grow-1">
+          <h3 class="h5 mb-2">
+            <a href="{{ .Permalink }}" class="text-decoration-none text-dark hover:text-primary">
+              {{ .Title }}
+            </a>
+          </h3>
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <span class="text-muted small">{{ .Date.Format "2006-01-02" }}</span>
+            <a href="{{ .Permalink }}" class="text-primary small text-decoration-none hover:text-primary">
+              <i class="fas fa-arrow-right me-1"></i>查看详情
+            </a>
+          </div>
+          <p class="text-muted mb-0">{{ .Summary | truncate 150 }}</p>
+        </div>
+      </div>
+    </div>
+    {{ end }}
+  </div>
+</div>
+{{ else }}
+{{/* 当没有找到文章时显示的信息 */}}
+<div class="alert alert-warning">
+  <strong>提示：</strong> 没有找到文章。请检查：
+  <ul class="mb-0 mt-2">
+    <li>是否在 "content/{{ $section }}" 目录下有文章</li>
+    <li>文章的 draft 字段是否设置为 false</li>
+    <li>section 名称是否正确</li>
+  </ul>
+</div>
+{{ end }}

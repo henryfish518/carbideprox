@@ -1,0 +1,378 @@
+{{ define "main" }}
+
+<!-- 列表页标题区域 - 完全参考RiPro风格 -->
+<section class="page-hero">
+    <div class="container">
+        <div class="page-header">
+            <h1 class="page-title">{{ .Title }}</h1>
+            <p class="page-description">
+                {{ $section := .Section }}
+                {{ if eq $section "cprj" }}
+                专业的拼多多出评软件和技术分享，帮助商家提升商品评价和销售转化率。我们提供最新最稳定的多多出评工具，助力商家轻松提升店铺信誉，实现销售增长。
+                {{ else if eq $section "dqrj" }}
+                高效的多店铺管理工具，一键操作多个平台，大幅提升运营效率。支持淘宝、拼多多、京东等多平台同时管理，让您轻松应对大规模店群运营。
+                {{ else if eq $section "yyjs" }}
+                最新的电商运营技术和策略，助力商家在激烈竞争中脱颖而出。涵盖流量获取、转化优化、数据分析等全方位运营技巧，助您打造爆款商品。
+                {{ else if eq $section "zbrj" }}
+                专业的直播带货软件和工具，提高直播效果和转化率。提供直播话术、互动工具、数据分析等功能，让您轻松打造高转化直播间。
+                {{ else if eq $section "hydt" }}
+                最新的电商行业动态和政策解读，帮助您把握行业发展趋势。提供电商市场分析、政策法规解读、行业资讯等内容，助您在电商领域保持领先。
+                {{ else }}
+                这里提供了最优质的电商资源和工具，帮助您提升工作效率和销售业绩。
+                {{ end }}
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- 分类筛选导航 - 完全参考RiPro风格 -->
+<section class="filter-nav">
+    <div class="container">
+        <div class="filter-tabs">
+            <!-- 移动端只显示6个按钮 -->
+            <div class="mobile-tabs">
+                <a href="/" class="filter-tab {{ if not .Section }}active{{ end }}">
+                    <i class="fas fa-home"></i>
+                    <span>全部</span>
+                </a>
+                
+                {{ $currentSection := .Section }}
+                
+                <a href="/cprj/" class="filter-tab {{ if eq $currentSection "cprj" }}active{{ end }}">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span>多多出评</span>
+                </a>
+                
+                <a href="/dqrj/" class="filter-tab {{ if eq $currentSection "dqrj" }}active{{ end }}">
+                    <i class="fas fa-store"></i>
+                    <span>店群软件</span>
+                </a>
+                
+                <a href="/yyjs/" class="filter-tab {{ if eq $currentSection "yyjs" }}active{{ end }}">
+                    <i class="fas fa-chart-line"></i>
+                    <span>运营技术</span>
+                </a>
+                
+                <a href="/zbrj/" class="filter-tab {{ if eq $currentSection "zbrj" }}active{{ end }}">
+                    <i class="fas fa-video"></i>
+                    <span>直播软件</span>
+                </a>
+                
+                <a href="/hydt/" class="filter-tab {{ if eq $currentSection "hydt" }}active{{ end }}">
+                    <i class="fas fa-chart-bar"></i>
+                    <span>行业动态</span>
+                </a>
+            </div>
+            
+            <!-- PC端显示所有导航 -->
+            <div class="desktop-tabs">
+                <a href="/" class="filter-tab {{ if not .Section }}active{{ end }}">
+                    <i class="fas fa-home"></i>
+                    <span>全部</span>
+                </a>
+                
+                {{ $currentSection := .Section }}
+                
+                <a href="/cprj/" class="filter-tab {{ if eq $currentSection "cprj" }}active{{ end }}">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span>多多出评软件</span>
+                </a>
+                
+                <a href="/dqrj/" class="filter-tab {{ if eq $currentSection "dqrj" }}active{{ end }}">
+                    <i class="fas fa-store"></i>
+                    <span>店群软件</span>
+                </a>
+                
+                <a href="/yyjs/" class="filter-tab {{ if eq $currentSection "yyjs" }}active{{ end }}">
+                    <i class="fas fa-chart-line"></i>
+                    <span>电商运营技术</span>
+                </a>
+                
+                <a href="/zbrj/" class="filter-tab {{ if eq $currentSection "zbrj" }}active{{ end }}">
+                    <i class="fas fa-video"></i>
+                    <span>电商直播软件</span>
+                </a>
+                
+                <a href="/hydt/" class="filter-tab {{ if eq $currentSection "hydt" }}active{{ end }}">
+                    <i class="fas fa-chart-bar"></i>
+                    <span>行业动态</span>
+                </a>
+            </div>
+        </div>
+        
+        <div class="filter-options">
+            <div class="filter-dropdown">
+                <button class="dropdown-toggle">
+                    <span>排序方式</span>
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="dropdown-menu">
+                    <a href="#" class="dropdown-item active">最新发布</a>
+                    <a href="#" class="dropdown-item">浏览最多</a>
+                    <a href="#" class="dropdown-item">点赞最多</a>
+                    <a href="#" class="dropdown-item">收藏最多</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 文章列表区域 - 使用Hugo分页功能 -->
+{{ $paginator := .Paginate (where site.RegularPages "Section" .Section) 20 }}
+
+<section class="content-area">
+    <div class="container">
+        
+        <div class="articles-grid">
+            {{ if gt (len $paginator.Pages) 0 }}
+                {{ range $paginator.Pages }}
+                <article class="article-card">
+                    {{ $imageUrl := .Params.featured_image | default .Params.image | default "" }}
+                    {{ if $imageUrl }}
+                    <div class="card-image">
+                        <img src="{{ $imageUrl }}" alt="{{ .Title }}" loading="lazy">
+                        <!-- VIP标识 -->
+                        {{ if .Params.vip }}
+                        <span class="vip-badge">VIP</span>
+                        {{ end }}
+                    </div>
+                    {{ else }}
+                    <div class="card-image placeholder">
+                        <i class="fas fa-image"></i>
+                    </div>
+                    {{ end }}
+                    
+                    <div class="card-content">
+                        <div class="card-category">
+                            {{ if .Params.categories }}
+                            {{ index .Params.categories 0 }}
+                            {{ end }}
+                        </div>
+                        
+                        <h3 class="card-title">
+                            <a href="{{ .Permalink }}">{{ .Title }}</a>
+                        </h3>
+                        
+                        <div class="card-meta">
+                            <span class="card-date">{{ .Date.Format "2006-01-02" }}</span>
+                            <div class="card-stats">
+                                <span class="stat">
+                                    <i class="fas fa-eye"></i>
+                                    {{ if .Params.views }}{{ .Params.views }}{{ else }}1.2k{{ end }}
+                                </span>
+                                <span class="stat">
+                                    <i class="fas fa-heart"></i>
+                                    {{ if .Params.likes }}{{ .Params.likes }}{{ else }}56{{ end }}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+                {{ end }}
+            {{ else }}
+                <div class="no-articles">
+                    <div class="no-articles-icon">
+                        <i class="fas fa-inbox"></i>
+                    </div>
+                    <h3>暂无相关文章</h3>
+                    <p>该分类下暂时没有发布任何内容，请稍后再来查看</p>
+                </div>
+            {{ end }}
+        </div>
+        
+        <!-- 分页导航 -->
+        <div class="pagination-nav">
+            <!-- 移动端分页导航 - 只显示7个分页按钮 -->
+            <div class="mobile-pagination">
+                {{ if $paginator.HasPrev }}
+                <a href="{{ $paginator.Prev.URL }}" class="pagination-btn pagination-btn-prev">
+                    <i class="fas fa-chevron-left"></i>
+                </a>
+                {{ end }}
+                    
+                <div class="pagination-numbers">
+                    {{ $totalPages := $paginator.TotalPages }}
+                    {{ $currentPage := $paginator.PageNumber }}
+                    
+                    <!-- 总页数不超过7页，全部显示 -->
+                    {{ if le $totalPages 7 }}
+                        {{ range $paginator.Pagers }}
+                            {{ if eq .PageNumber $currentPage }}
+                            <a href="{{ .URL }}" class="pagination-number pagination-current">{{ .PageNumber }}</a>
+                            {{ else }}
+                            <a href="{{ .URL }}" class="pagination-number">{{ .PageNumber }}</a>
+                            {{ end }}
+                        {{ end }}
+                    {{ else }}
+                        <!-- 总页数超过7页，显示省略号 -->
+                        <!-- 如果当前页在前面4页 -->
+                        {{ if le $currentPage 4 }}
+                            <!-- 显示前4页 -->
+                            {{ range $i := (seq 1 4) }}
+                                {{ if eq $i $currentPage }}
+                                <a href="{{ (index $paginator.Pagers (sub $i 1)).URL }}" class="pagination-number pagination-current">{{ $i }}</a>
+                                {{ else }}
+                                <a href="{{ (index $paginator.Pagers (sub $i 1)).URL }}" class="pagination-number">{{ $i }}</a>
+                                {{ end }}
+                            {{ end }}
+                            
+                            <!-- 显示省略号 -->
+                            <span class="pagination-ellipsis">...</span>
+                            
+                            <!-- 显示最后2页 -->
+                            {{ range $i := (seq (sub $totalPages 1) $totalPages) }}
+                            <a href="{{ (index $paginator.Pagers (sub $i 1)).URL }}" class="pagination-number">{{ $i }}</a>
+                            {{ end }}
+                        {{ else }}
+                            <!-- 如果当前页在后面3页 -->
+                            {{ if ge $currentPage (sub $totalPages 3) }}
+                                <!-- 显示前2页 -->
+                                {{ range $i := (seq 1 2) }}
+                                <a href="{{ (index $paginator.Pagers (sub $i 1)).URL }}" class="pagination-number">{{ $i }}</a>
+                                {{ end }}
+                                
+                                <!-- 显示省略号 -->
+                                <span class="pagination-ellipsis">...</span>
+                                
+                                <!-- 显示最后3页 -->
+                                {{ range $i := (seq (sub $totalPages 2) $totalPages) }}
+                                    {{ if eq $i $currentPage }}
+                                    <a href="{{ (index $paginator.Pagers (sub $i 1)).URL }}" class="pagination-number pagination-current">{{ $i }}</a>
+                                    {{ else }}
+                                    <a href="{{ (index $paginator.Pagers (sub $i 1)).URL }}" class="pagination-number">{{ $i }}</a>
+                                    {{ end }}
+                                {{ end }}
+                            {{ else }}
+                                <!-- 如果当前页在中间 -->
+                                <!-- 显示前2页 -->
+                                {{ range $i := (seq 1 2) }}
+                                <a href="{{ (index $paginator.Pagers (sub $i 1)).URL }}" class="pagination-number">{{ $i }}</a>
+                                {{ end }}
+                                
+                                <!-- 显示省略号 -->
+                                <span class="pagination-ellipsis">...</span>
+                                
+                                <!-- 显示当前页附近的页码（最多3页） -->
+                                {{ $start := (sub $currentPage 1) }}
+                                {{ $end := (add $currentPage 1) }}
+                                {{ if lt $start 3 }}{{ $start = 3 }}{{ end }}
+                                {{ if gt $end (sub $totalPages 2) }}{{ $end = (sub $totalPages 2) }}{{ end }}
+                                
+                                {{ range $i := (seq $start $end) }}
+                                    {{ if eq $i $currentPage }}
+                                    <a href="{{ (index $paginator.Pagers (sub $i 1)).URL }}" class="pagination-number pagination-current">{{ $i }}</a>
+                                    {{ else }}
+                                    <a href="{{ (index $paginator.Pagers (sub $i 1)).URL }}" class="pagination-number">{{ $i }}</a>
+                                    {{ end }}
+                                {{ end }}
+                                
+                                <!-- 显示省略号 -->
+                                <span class="pagination-ellipsis">...</span>
+                                
+                                <!-- 显示最后2页 -->
+                                {{ range $i := (seq (sub $totalPages 1) $totalPages) }}
+                                <a href="{{ (index $paginator.Pagers (sub $i 1)).URL }}" class="pagination-number">{{ $i }}</a>
+                                {{ end }}
+                            {{ end }}
+                        {{ end }}
+                    {{ end }}
+                </div>
+                
+                {{ if $paginator.HasNext }}
+                <a href="{{ $paginator.Next.URL }}" class="pagination-btn pagination-btn-next">
+                    <i class="fas fa-chevron-right"></i>
+                </a>
+                {{ end }}
+            </div>
+            
+            <!-- PC端分页导航 - 显示更多分页按钮 -->
+            <div class="desktop-pagination">
+                {{ if $paginator.HasPrev }}
+                <a href="{{ $paginator.Prev.URL }}" class="pagination-btn pagination-btn-prev">
+                    <i class="fas fa-chevron-left"></i> 上一页
+                </a>
+                {{ end }}
+                    
+                <div class="pagination-numbers">
+                    {{ $totalPages := $paginator.TotalPages }}
+                    {{ $currentPage := $paginator.PageNumber }}
+                    
+                    <!-- 总页数不超过14页，全部显示 -->
+                    {{ if le $totalPages 14 }}
+                        {{ range $paginator.Pagers }}
+                            {{ if eq .PageNumber $currentPage }}
+                            <a href="{{ .URL }}" class="pagination-number pagination-current">{{ .PageNumber }}</a>
+                            {{ else }}
+                            <a href="{{ .URL }}" class="pagination-number">{{ .PageNumber }}</a>
+                            {{ end }}
+                        {{ end }}
+                    {{ else }}
+                        <!-- 总页数超过14页，显示省略号 -->
+                        <!-- 如果当前页在前面7页 -->
+                        {{ if le $currentPage 7 }}
+                            <!-- 显示前7页 -->
+                            {{ range $i := (seq 1 7) }}
+                                {{ if eq $i $currentPage }}
+                                <a href="{{ (index $paginator.Pagers (sub $i 1)).URL }}" class="pagination-number pagination-current">{{ $i }}</a>
+                                {{ else }}
+                                <a href="{{ (index $paginator.Pagers (sub $i 1)).URL }}" class="pagination-number">{{ $i }}</a>
+                                {{ end }}
+                            {{ end }}
+                            
+                            <!-- 显示省略号 -->
+                            <span class="pagination-ellipsis">...</span>
+                            
+                            <!-- 显示最后7页 -->
+                            {{ range $i := (seq (sub $totalPages 6) $totalPages) }}
+                            <a href="{{ (index $paginator.Pagers (sub $i 1)).URL }}" class="pagination-number">{{ $i }}</a>
+                            {{ end }}
+                        {{ else }}
+                            <!-- 如果当前页在后面7页或中间 -->
+                            <!-- 显示前7页 -->
+                            {{ range $i := (seq 1 7) }}
+                            <a href="{{ (index $paginator.Pagers (sub $i 1)).URL }}" class="pagination-number">{{ $i }}</a>
+                            {{ end }}
+                            
+                            <!-- 显示省略号 -->
+                            <span class="pagination-ellipsis">...</span>
+                            
+                            <!-- 显示当前页附近的页码（最多3页） -->
+                            {{ $start := (sub $currentPage 1) }}
+                            {{ $end := (add $currentPage 1) }}
+                            {{ if lt $start 8 }}{{ $start = 8 }}{{ end }}
+                            {{ if gt $end (sub $totalPages 7) }}{{ $end = (sub $totalPages 7) }}{{ end }}
+                            
+                            {{ range $i := (seq $start $end) }}
+                                {{ if eq $i $currentPage }}
+                                <a href="{{ (index $paginator.Pagers (sub $i 1)).URL }}" class="pagination-number pagination-current">{{ $i }}</a>
+                                {{ else }}
+                                <a href="{{ (index $paginator.Pagers (sub $i 1)).URL }}" class="pagination-number">{{ $i }}</a>
+                                {{ end }}
+                            {{ end }}
+                            
+                            <!-- 显示省略号 -->
+                            <span class="pagination-ellipsis">...</span>
+                            
+                            <!-- 显示最后7页 -->
+                            {{ range $i := (seq (sub $totalPages 6) $totalPages) }}
+                                {{ if eq $i $currentPage }}
+                                <a href="{{ (index $paginator.Pagers (sub $i 1)).URL }}" class="pagination-number pagination-current">{{ $i }}</a>
+                                {{ else }}
+                                <a href="{{ (index $paginator.Pagers (sub $i 1)).URL }}" class="pagination-number">{{ $i }}</a>
+                                {{ end }}
+                            {{ end }}
+                        {{ end }}
+                    {{ end }}
+                </div>
+                
+                {{ if $paginator.HasNext }}
+                <a href="{{ $paginator.Next.URL }}" class="pagination-btn pagination-btn-next">
+                    下一页 <i class="fas fa-chevron-right"></i>
+                </a>
+                {{ end }}
+            </div>
+        </div>
+    </div>
+</section>
+
+{{ end }}

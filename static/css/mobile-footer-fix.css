@@ -1,0 +1,222 @@
+/* 移动端页脚修复 - 保持原有样式的同时解决显示问题 */
+
+/* 先恢复基本样式 */
+.site-footer .footer-main {
+  background: #f8f9fa;
+  color: #333;
+  padding: 1.5rem 0;
+  border-top: 1px solid #e9ecef;
+  font-size: 0.9rem;
+  display: block;
+}
+
+.site-footer .footer-nav {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.site-footer .footer-nav .footer-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+.site-footer .footer-nav .footer-links li {
+  margin: 0;
+}
+
+.site-footer .footer-nav .footer-links li a {
+  color: #333;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.site-footer .footer-nav .footer-links li a:hover {
+  color: var(--primary-color);
+  text-decoration: underline;
+}
+
+.site-footer .footer-copyright {
+  text-align: center;
+}
+
+.site-footer .footer-copyright p {
+  margin: 0.25rem 0;
+  font-size: 0.8rem;
+  color: #888;
+  line-height: 1.4;
+}
+
+.site-footer .footer-copyright a {
+  color: #666;
+  text-decoration: none;
+}
+
+.site-footer .footer-copyright a:hover {
+  color: var(--primary-color);
+  text-decoration: underline;
+}
+
+/* 移动端样式 */
+@media (max-width: 768px) {
+  /* 隐藏桌面端页脚区域 */
+  footer.site-footer .footer-main,
+  .site-footer .footer-main,
+  .footer-main {
+    display: none !important;
+    height: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  
+  /* 确保移动端导航正确显示 */
+  footer.site-footer .mobile-footer-nav,
+  footer .mobile-footer-nav,
+  .site-footer .mobile-footer-nav,
+  .mobile-footer-nav {
+    display: flex !important;
+    position: fixed !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    background: #fff !important;
+    border-top: 1px solid #e9ecef !important;
+    padding: 8px 0 5px !important;
+    z-index: 1000 !important;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1) !important;
+  }
+  
+  /* 移动端导航样式 */
+  footer.site-footer .mobile-footer-links,
+  footer .mobile-footer-links,
+  .site-footer .mobile-footer-links,
+  .mobile-footer-links {
+    display: flex !important;
+    width: 100% !important;
+    list-style: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    justify-content: space-around !important;
+  }
+  
+  footer.site-footer .mobile-footer-links li,
+  footer .mobile-footer-links li,
+  .site-footer .mobile-footer-links li,
+  .mobile-footer-links li {
+    flex: 1 !important;
+    text-align: center !important;
+    max-width: 20% !important;
+  }
+  
+  footer.site-footer .mobile-footer-links li a,
+  footer .mobile-footer-links li a,
+  .site-footer .mobile-footer-links li a,
+  .mobile-footer-links li a {
+    display: block !important;
+    text-decoration: none !important;
+    color: #333 !important;
+    font-size: 10px !important;
+    font-weight: 500 !important;
+    transition: color 0.3s ease !important;
+    padding: 2px 0 !important;
+    text-align: center !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    line-height: 1.2 !important;
+    margin: 0 2px !important;
+  }
+  
+  footer.site-footer .mobile-footer-links li a:hover,
+  footer .mobile-footer-links li a:hover,
+  .site-footer .mobile-footer-links li a:hover,
+  .mobile-footer-links li a:hover {
+    color: #2c5aa0 !important;
+  }
+  
+  /* 移动端不显示图标 */
+  footer.site-footer .mobile-footer-links li a i,
+  footer .mobile-footer-links li a i,
+  .site-footer .mobile-footer-links li a i,
+  .mobile-footer-links li a i {
+    display: none !important;
+    visibility: hidden !important;
+    height: 0 !important;
+    width: 0 !important;
+  }
+  
+  /* 移动端版权信息 */
+  footer.site-footer .mobile-footer-copyright,
+  footer .mobile-footer-copyright,
+  .site-footer .mobile-footer-copyright,
+  .mobile-footer-copyright {
+    display: block !important;
+    padding: 70px 15px 20px !important;
+    text-align: center !important;
+    font-size: 12px !important;
+    color: #666 !important;
+    background: #f8f9fa !important;
+    line-height: 1.6 !important;
+    margin-top: 0 !important;
+    visibility: visible !important;
+    height: auto !important;
+  }
+  
+  /* 确保版权信息中的段落正确显示 */
+  footer.site-footer .mobile-footer-copyright p,
+  footer .mobile-footer-copyright p,
+  .site-footer .mobile-footer-copyright p,
+  .mobile-footer-copyright p {
+    margin: 5px 0 !important;
+    font-size: 12px !important;
+    color: #666 !important;
+    line-height: 1.6 !important;
+  }
+  
+  /* 确保版权信息中的链接正确显示 */
+  footer.site-footer .mobile-footer-copyright a,
+  footer .mobile-footer-copyright a,
+  .site-footer .mobile-footer-copyright a,
+  .mobile-footer-copyright a {
+    color: #666 !important;
+    text-decoration: none !important;
+  }
+  
+  footer.site-footer .mobile-footer-copyright a:hover,
+  footer .mobile-footer-copyright a:hover,
+  .site-footer .mobile-footer-copyright a:hover,
+  .mobile-footer-copyright a:hover {
+    color: #2c5aa0 !important;
+    text-decoration: underline !important;
+  }
+}
+
+/* PC端确保正确显示 */
+@media (min-width: 769px) {
+  footer.site-footer .footer-main,
+  footer .footer-main,
+  .site-footer .footer-main,
+  .footer-main {
+    display: block !important;
+  }
+  
+  footer.site-footer .mobile-footer-nav,
+  footer .mobile-footer-nav,
+  .site-footer .mobile-footer-nav,
+  .mobile-footer-nav {
+    display: none !important;
+  }
+  
+  footer.site-footer .mobile-footer-copyright,
+  footer .mobile-footer-copyright,
+  .site-footer .mobile-footer-copyright,
+  .mobile-footer-copyright {
+    display: none !important;
+  }
+}

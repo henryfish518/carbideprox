@@ -1,0 +1,23 @@
+/* 英雄区域布局覆盖样式 */
+.hero-banner .hero-content {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center;
+  gap: 4rem;
+}
+
+.hero-banner .hero-image {
+  flex: 0 0 45% !important;
+  order: 1 !important; /* 确保图片在第一个位置 */
+}
+
+.hero-banner .hero-text {
+  flex: 0 0 55% !important;
+  order: 2 !important; /* 确保文字在第二个位置 */
+}
+
+/* 图片样式 */
+.hero-banner .main-image {
+  width: 50% !important;
+  height: auto;
+}

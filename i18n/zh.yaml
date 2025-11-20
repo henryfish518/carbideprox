@@ -1,0 +1,72 @@
+ui_pager_prev:
+  other: 上一页
+ui_pager_next:
+  other: 下一页
+ui_read_more:
+  other: 更多
+ui_search:
+  other: 站内搜索…
+ui_in:
+  other: 在
+ui_all:
+  other: 所有
+footer_all_rights_reserved:
+  other: 保留所有权利
+footer_privacy_policy:
+  other: 隐私政策
+post_byline_by:
+  other: By
+post_created:
+  other: 创建
+post_last_mod:
+  other: '最后更新于:'
+post_edit_this:
+  other: 编辑此页
+post_view_this:
+  other: 查看页面源码
+post_create_child_page:
+  other: 添加子页面
+post_create_issue:
+  other: 提交问题反馈
+post_create_project_issue:
+  other: 提交项目问题
+post_posts_in:
+  other: 撰写于
+post_reading_time:
+  other: 分钟阅读
+post_less_than_a_minute_read:
+  other: 少于1分钟
+print_printable_section:
+  other: 这是本节的多页打印视图。
+print_click_to_print:
+  other: 点击此处打印
+print_show_regular:
+  other: 返回本页常规视图
+print_entire_section:
+  other: 整节打印
+community_join:
+  other: 欢迎加入 {{ .Site.Title }} 组织
+community_introduce:
+  other: >-
+    {{ .Site.Title }}
+    是一个开源项目，社区中的任何人都可以使用、改善和尽情使用它。我们很期待你能加入我们！下面是如何查看最近更新以及参与我们的一些方式。
+community_learn:
+  other: 学习和沟通
+community_using:
+  other: 正在或打算使用 {{ .Site.Title }} ？获取更多信息：
+community_develop:
+  other: 开发和贡献
+community_contribute:
+  other: 如果你想通过为 {{ .Site.Title }} 贡献更多参与，请在此处加入我们：
+community_how_to:
+  other: 你可以了解如何为 {{ .Site.Title }} 做出贡献，请参考我们的
+community_guideline:
+  other: 贡献指南
+feedback_title:
+  other: 意见反馈
+feedback_question:
+  other: 这个页面对你有帮助吗？
+feedback_positive:
+  other: 👍有帮助
+feedback_negative:
+  other: 👎没帮助

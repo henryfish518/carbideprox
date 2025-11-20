@@ -1,0 +1,11 @@
+# 忽略 Hugo 自动生成的统计文件
+hugo_stats.json
+# 忽略node_modules依赖包
+node_modules/
+# 可补充其他无需跟踪的文件（可选）
+.DS_Store
+dist/
+*.log
+public/
+resources/
+.hugo_build.lock

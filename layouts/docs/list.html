@@ -1,0 +1,105 @@
+{{ define "main" -}}
+
+<div class="category-page">
+    <section class="category-header">
+        <div class="container">
+            <h1 class="page-title">{{ .Title }}</h1>
+            <p class="page-description">{{ .Params.description | default "浏览我们的文档资源，获取更多专业知识" }}</p>
+            
+            <!-- 搜索框 -->
+            <div class="search-box">
+                <form action="/search" method="get" class="search-form">
+                    <input type="text" name="q" placeholder="搜索文档资源..." class="search-input">
+                    <button type="submit" class="search-btn">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- 顶部导航栏 -->
+    <nav class="category-navbar">
+        <div class="navbar-container">
+            <ul class="nav-tabs">
+                {{ range .Site.Sections }}
+                <li class="nav-item">
+                    <a href="{{ .Permalink }}" class="nav-link {{ if eq .RelPermalink $.RelPermalink }}active{{ end }}">
+                        {{ .Title }}
+                        <span class="category-count">{{ len .Pages }}</span>
+                    </a>
+                </li>
+                {{ end }}
+            </ul>
+        </div>
+    </nav>
+
+    <!-- 主要内容 -->
+    <div class="main-content">
+        {{ if .Pages -}}
+        <div class="toolbar">
+            <div class="result-count">
+                共找到 {{ len .Pages }} 个文档资源
+            </div>
+        </div>
+
+        <div class="resources-grid">
+            {{ range .Pages.ByDate.Reverse }}
+            <article class="resource-card">
+                <!-- 图片区域已移除 -->
+                
+                {{ if .Params.vip }}
+                <div class="vip-badge">VIP</div>
+                {{ else }}
+                <div class="free-badge">免费</div>
+                {{ end }}
+
+                <div class="resource-content">
+                    <h3 class="resource-title">
+                        <a href="{{ .Permalink }}">{{ .Title }}</a>
+                    </h3>
+                    
+                    <p class="resource-description">
+                        {{ .Summary | plainify | truncate 120 }}
+                    </p>
+                    
+                    <div class="resource-meta">
+                        <span class="meta-item">
+                            <i class="fas fa-calendar"></i>
+                            {{ .Date.Format "2006-01-02" }}
+                        </span>
+                        <span class="meta-item">
+                            <i class="fas fa-eye"></i>
+                            {{ .Params.views | default 0 }}
+                        </span>
+                    </div>
+                    
+                    {{ if .Params.tags }}
+                    <div class="resource-tags">
+                        {{ range first 3 .Params.tags }}
+                        <span class="tag">{{ . }}</span>
+                        {{ end }}
+                    </div>
+                    {{ end }}
+                    
+                    <div class="resource-actions">
+                        <a href="{{ .Permalink }}" class="btn-detail">查看详情</a>
+                        <button class="btn-favorite">
+                            <i class="fas fa-heart"></i>
+                        </button>
+                    </div>
+                </div>
+            </article>
+            {{ end }}
+        </div>
+        {{- else -}}
+        <div class="no-results">
+            <i class="fas fa-book" style="font-size: 3rem; color: var(--text-secondary); margin-bottom: 1rem;"></i>
+            <h3>暂无文档资源</h3>
+            <p>该分类下暂时没有可用的文档资源</p>
+        </div>
+        {{- end -}}
+    </div>
+</div>
+
+{{ end -}}

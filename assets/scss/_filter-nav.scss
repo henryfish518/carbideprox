@@ -1,0 +1,84 @@
+// 列表页导航样式
+.filter-nav {
+  background: #fff;
+  border-bottom: 1px solid #eee;
+  padding: 15px 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  
+  .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .filter-tabs {
+    display: flex;
+    overflow-x: auto;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+    
+    &::-webkit-scrollbar {
+      display: none; /* Chrome, Safari, Opera */
+    }
+  }
+  
+  .mobile-tabs {
+    display: flex;
+    
+    @media (min-width: 768px) {
+      display: none;
+    }
+  }
+  
+  .desktop-tabs {
+    display: none;
+    
+    @media (min-width: 768px) {
+      display: flex;
+    }
+  }
+  
+  .filter-tab {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 15px;
+    margin-right: 5px;
+    text-decoration: none;
+    color: #666;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    
+    i {
+      margin-bottom: 5px;
+      font-size: 16px;
+    }
+    
+    span {
+      font-size: 12px;
+      line-height: 1.2;
+    }
+    
+    &.active {
+      background: var(--primary-color, #007bff);
+      color: #fff;
+    }
+    
+    &:hover:not(.active) {
+      background: #f5f5f5;
+      color: var(--primary-color, #007bff);
+    }
+  }
+  
+  .filter-options {
+    display: none;
+    
+    @media (min-width: 768px) {
+      display: block;
+    }
+  }
+}

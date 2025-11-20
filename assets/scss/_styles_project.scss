@@ -1,0 +1,16 @@
+/*
+
+Nothing defined here. The Hugo project that uses this theme can override Bootstrap by adding a file to:
+
+assets/scss/_styles_project.scss
+
+*/
+
+// 导入自定义样式文件
+@import "filter-nav";
+.td-page-meta__view {
+  display: none !important;
+}
+.td-page-meta__child {
+  display: none !important;
+}

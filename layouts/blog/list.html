@@ -1,0 +1,646 @@
+{{ define "main" }}
+<div class="blog-list-page">
+    <!-- 页面头部 -->
+    <div class="blog-header">
+        <div class="container">
+            <div class="blog-header-content">
+                <h1 class="blog-title">资源列表</h1>
+                <p class="blog-subtitle">发现最新的电商工具、直播软件和AI助手</p>
+                
+                <!-- 统计信息 -->
+                <div class="blog-stats">
+                    <div class="stat-item">
+                        <span class="stat-number">{{ len .Pages }}</span>
+                        <span class="stat-label">资源总数</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">{{ len .Site.Taxonomies.categories }}</span>
+                        <span class="stat-label">分类数量</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">{{ len .Site.Taxonomies.tags }}</span>
+                        <span class="stat-label">标签数量</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 分类导航 -->
+    <div class="category-navigation">
+        <div class="container">
+            <div class="category-nav">
+                <a href="/blog/" class="category-btn {{ if eq .Page.Kind "section" }}active{{ end }}">
+                    <i class="fas fa-th-large"></i>
+                    <span>全部</span>
+                </a>
+                {{ range .Site.Taxonomies.categories }}
+                <a href="{{ .Page.RelPermalink }}" class="category-btn {{ if eq .Page.Title $.Title }}active{{ end }}">
+                    <i class="fas fa-folder"></i>
+                    <span>{{ .Page.Title }}</span>
+                    <span class="category-count">{{ len .Pages }}</span>
+                </a>
+                {{ end }}
+            </div>
+        </div>
+    </div>
+
+    <!-- 主要内容区域 -->
+    <div class="blog-content">
+        <div class="container">
+            <!-- 筛选和排序 -->
+            <div class="blog-filters">
+                <div class="filter-group">
+                    <span class="filter-label">排序方式：</span>
+                    <div class="filter-buttons">
+                        <button class="filter-btn active" data-sort="date-desc">最新</button>
+                        <button class="filter-btn" data-sort="date-asc">最早</button>
+                        <button class="filter-btn" data-sort="title">标题</button>
+                        <button class="filter-btn" data-sort="popular">热门</button>
+                    </div>
+                </div>
+                
+                <div class="filter-group">
+                    <span class="filter-label">显示：</span>
+                    <div class="filter-buttons">
+                        <button class="filter-btn active" data-view="card">卡片视图</button>
+                        <button class="filter-btn" data-view="list">列表视图</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 文章网格 -->
+            <div class="articles-grid">
+                {{ $paginator := .Paginate (where .Pages "Type" "blog") 16 }}
+                {{ range $paginator.Pages }}
+                <article class="article-card" data-categories="{{ with .Params.categories }}{{ delimit . "," }}{{ end }}">
+                    {{ if .Params.featured_image }}
+                    <div class="article-image">
+                        <img src="{{ .Params.featured_image }}" alt="{{ .Title }}" loading="lazy">
+                        {{ if .Params.categories }}
+                        <div class="article-category">
+                            {{ index .Params.categories 0 }}
+                        </div>
+                        {{ end }}
+                    </div>
+                    {{ end }}
+                    
+                    <div class="article-content">
+                        <div class="article-meta">
+                            <span class="article-date">{{ .Date.Format "2006-01-02" }}</span>
+                            {{ if .Params.tags }}
+                            <span class="article-tag">{{ index .Params.tags 0 }}</span>
+                            {{ end }}
+                        </div>
+                        
+                        <h3 class="article-title">
+                            <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+                        </h3>
+                        
+                        <p class="article-excerpt">
+                            {{ .Summary | plainify | truncate 120 }}
+                        </p>
+                        
+                        <div class="article-footer">
+                            <div class="article-stats">
+                                <span class="stat">
+                                    <i class="fas fa-eye"></i> {{ .Params.views | default 0 }}
+                                </span>
+                                <span class="stat">
+                                    <i class="fas fa-download"></i> {{ .Params.downloads | default 0 }}
+                                </span>
+                            </div>
+                            <a href="{{ .RelPermalink }}" class="read-more">
+                                查看详情 <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                </article>
+                {{ end }}
+            </div>
+
+            <!-- 分页导航 -->
+            {{ if gt $paginator.TotalPages 1 }}
+            {{ partial "pagination.html" . }}
+            {{ end }}
+        </div>
+    </div>
+</div>
+
+<style>
+.blog-list-page {
+    min-height: 100vh;
+    background: var(--bg-primary);
+}
+
+.blog-header {
+    background: linear-gradient(135deg, var(--primary-color) 0%, #4a5568 100%);
+    color: white;
+    padding: 3rem 0;
+}
+
+.blog-header-content {
+    text-align: center;
+}
+
+.blog-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.blog-subtitle {
+    font-size: 1.1rem;
+    opacity: 0.9;
+    margin-bottom: 2rem;
+}
+
+.blog-stats {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.stat-number {
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.stat-label {
+    font-size: 0.9rem;
+    opacity: 0.8;
+    margin-top: 0.5rem;
+}
+
+/* 分类导航样式 */
+.category-navigation {
+    background: var(--bg-primary);
+    border-bottom: 1px solid var(--border-color);
+    padding: 1.5rem 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(10px);
+}
+
+.category-nav {
+    display: flex;
+    gap: 1rem;
+    overflow-x: auto;
+    padding-bottom: 0.5rem;
+    scrollbar-width: none;
+}
+
+.category-nav::-webkit-scrollbar {
+    display: none;
+}
+
+.category-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1.25rem;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    text-decoration: none;
+    color: var(--text-secondary);
+    transition: all 0.3s ease;
+    font-weight: 500;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.category-btn:hover,
+.category-btn.active {
+    background: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(var(--primary-rgb), 0.2);
+}
+
+.category-btn i {
+    font-size: 1rem;
+}
+
+.category-count {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 0.2rem 0.5rem;
+    border-radius: 1rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.blog-content {
+    padding: 3rem 0;
+}
+
+.blog-filters {
+    background: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.filter-group {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.filter-group:last-child {
+    margin-bottom: 0;
+}
+
+.filter-label {
+    font-weight: 600;
+    color: var(--text-primary);
+    min-width: 80px;
+}
+
+.filter-buttons {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.filter-btn {
+    padding: 0.5rem 1rem;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.filter-btn:hover,
+.filter-btn.active {
+    background: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+
+.articles-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.article-card {
+    background: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.article-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    border-color: var(--primary-color);
+}
+
+.article-image {
+    position: relative;
+    height: 180px;
+    overflow: hidden;
+}
+
+.article-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.article-card:hover .article-image img {
+    transform: scale(1.05);
+}
+
+.article-category {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    background: var(--primary-color);
+    color: white;
+    padding: 0.3rem 0.75rem;
+    border-radius: 1rem;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+.article-content {
+    padding: 1.5rem;
+}
+
+.article-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.75rem;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+.article-tag {
+    background: var(--bg-secondary);
+    padding: 0.2rem 0.5rem;
+    border-radius: 0.5rem;
+    font-size: 0.8rem;
+}
+
+.article-title {
+    margin: 0 0 0.75rem 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+    line-height: 1.4;
+}
+
+.article-title a {
+    color: var(--text-primary);
+    text-decoration: none;
+}
+
+.article-title a:hover {
+    color: var(--primary-color);
+}
+
+.article-excerpt {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin-bottom: 1.5rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.article-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.article-stats {
+    display: flex;
+    gap: 1rem;
+}
+
+.stat {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+
+.read-more {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: var(--primary-color);
+    color: white;
+    text-decoration: none;
+    border-radius: var(--radius-md);
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.read-more:hover {
+    background: var(--primary-dark);
+    transform: translateX(2px);
+}
+
+/* 移动端优化 */
+@media (max-width: 768px) {
+    .blog-header {
+        padding: 2rem 0;
+    }
+    
+    .blog-title {
+        font-size: 2rem;
+    }
+    
+    .blog-subtitle {
+        font-size: 1rem;
+    }
+    
+    .blog-stats {
+        gap: 1.5rem;
+    }
+    
+    .stat-number {
+        font-size: 1.5rem;
+    }
+    
+    .category-navigation {
+        padding: 1rem 0;
+    }
+    
+    .category-nav {
+        gap: 0.75rem;
+    }
+    
+    .category-btn {
+        padding: 0.625rem 1rem;
+        font-size: 0.9rem;
+    }
+    
+    .blog-content {
+        padding: 2rem 0;
+    }
+    
+    .blog-filters {
+        padding: 1rem;
+    }
+    
+    .filter-group {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.75rem;
+    }
+    
+    .filter-label {
+        min-width: auto;
+    }
+    
+    .filter-buttons {
+        justify-content: flex-start;
+    }
+    
+    .articles-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .article-image {
+        height: 160px;
+    }
+    
+    .article-content {
+        padding: 1.25rem;
+    }
+    
+    .article-footer {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: stretch;
+    }
+    
+    .article-stats {
+        justify-content: space-between;
+    }
+}
+
+@media (max-width: 480px) {
+    .blog-header {
+        padding: 1.5rem 0;
+    }
+    
+    .blog-title {
+        font-size: 1.75rem;
+    }
+    
+    .blog-subtitle {
+        font-size: 0.95rem;
+    }
+    
+    .blog-stats {
+        gap: 1rem;
+    }
+    
+    .stat-number {
+        font-size: 1.25rem;
+    }
+    
+    .category-nav {
+        gap: 0.5rem;
+    }
+    
+    .category-btn {
+        padding: 0.5rem 0.875rem;
+        font-size: 0.85rem;
+    }
+    
+    .blog-content {
+        padding: 1.5rem 0;
+    }
+    
+    .filter-buttons {
+        justify-content: space-between;
+    }
+    
+    .filter-btn {
+        flex: 1;
+        text-align: center;
+    }
+}
+</style>
+
+<script>
+// 筛选和排序功能
+document.addEventListener('DOMContentLoaded', function() {
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const articleCards = document.querySelectorAll('.article-card');
+    
+    // 排序功能
+    const sortFunctions = {
+        'date-desc': (a, b) => new Date(b.getAttribute('data-date')) - new Date(a.getAttribute('data-date')),
+        'date-asc': (a, b) => new Date(a.getAttribute('data-date')) - new Date(b.getAttribute('data-date')),
+        'title': (a, b) => a.querySelector('.article-title').textContent.localeCompare(b.querySelector('.article-title').textContent),
+        'popular': (a, b) => parseInt(b.getAttribute('data-views')) - parseInt(a.getAttribute('data-views'))
+    };
+    
+    // 筛选功能
+    function filterAndSort() {
+        const activeCategory = document.querySelector('.filter-btn[data-category].active')?.dataset.category || 'all';
+        const activeSort = document.querySelector('.filter-btn[data-sort].active')?.dataset.sort || 'date-desc';
+        
+        const articles = Array.from(articleCards);
+        
+        // 筛选
+        const filteredArticles = activeCategory === 'all' 
+            ? articles 
+            : articles.filter(card => {
+                const categories = card.getAttribute('data-categories') || '';
+                return categories.includes(activeCategory);
+            });
+        
+        // 排序
+        const sortedArticles = sortFunctions[activeSort] 
+            ? filteredArticles.sort(sortFunctions[activeSort])
+            : filteredArticles;
+        
+        // 重新排列
+        const grid = document.querySelector('.articles-grid');
+        sortedArticles.forEach(card => grid.appendChild(card));
+    }
+    
+    // 绑定事件
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            const type = this.hasAttribute('data-sort') ? 'sort' : 'category';
+            
+            // 移除同类型按钮的激活状态
+            document.querySelectorAll(`.filter-btn[data-${type}]`).forEach(b => {
+                b.classList.remove('active');
+            });
+            
+            // 添加当前按钮激活状态
+            this.classList.add('active');
+            
+            // 执行筛选和排序
+            filterAndSort();
+        });
+        
+        // 触摸优化
+        btn.addEventListener('touchstart', function() {
+            this.style.transform = 'scale(0.95)';
+        });
+        
+        btn.addEventListener('touchend', function() {
+            this.style.transform = 'scale(1)';
+        });
+    });
+    
+    // 为文章卡片添加数据属性
+    articleCards.forEach(card => {
+        const date = card.querySelector('.article-date').textContent;
+        const views = card.querySelector('[data-views]')?.textContent || '0';
+        
+        card.setAttribute('data-date', date);
+        card.setAttribute('data-views', views);
+    });
+    
+    // 移动端分类导航触摸优化
+    const categoryBtns = document.querySelectorAll('.category-btn');
+    categoryBtns.forEach(btn => {
+        btn.addEventListener('touchstart', function() {
+            this.style.transform = 'scale(0.95)';
+        });
+        
+        btn.addEventListener('touchend', function() {
+            this.style.transform = 'scale(1)';
+        });
+    });
+});
+</script>
+{{ end }}

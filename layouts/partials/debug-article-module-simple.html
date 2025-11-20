@@ -1,0 +1,99 @@
+<!-- 简化的调试模块 -->
+{{ $title := .title | default "文章列表" }}
+{{ $category := .category | default "" }}
+{{ $site := .Site }}
+
+<!-- 定义分类映射：英文名到中文名 -->
+{{ $categoryMap := dict "yyjs" "电商运营技术" "zbrj" "电商直播软件" "dqrj" "店群软件" "cprj" "多多出评软件" }}
+{{ $categoryName := index $categoryMap $category | default $category }}
+
+<!-- 筛选文章 -->
+{{ $pages := where $site.RegularPages "Params.categories" "intersect" (slice $categoryName) }}
+
+<section class="article-module-debug" style="background: #f8f9fa; padding: 2rem; margin: 2rem 0; border-radius: 8px; border: 1px solid #ddd;">
+    <div class="container">
+        <h3 style="color: #333; margin-bottom: 1rem;">调试信息：{{ $title }}</h3>
+        <p style="color: #666; margin-bottom: 1rem;">分类参数: {{ $category }} (中文名: {{ $categoryName }})</p>
+        <p style="color: #666; margin-bottom: 1rem;">文章总数: {{ len $pages }}</p>
+        
+        <!-- 显示前3篇匹配的文章 -->
+        <h4 style="color: #333; margin-bottom: 0.5rem;">匹配到的文章:</h4>
+        <ul style="color: #666; padding-left: 20px;">
+            {{ range first 3 $pages }}
+                <li>{{ .Title }}</li>
+            {{ end }}
+        </ul>
+        
+        <!-- 检查条件 -->
+        <h4 style="color: #333; margin-bottom: 0.5rem;">条件检查:</h4>
+        <ul style="color: #666; padding-left: 20px;">
+            <li>len($pages) = {{ len $pages }}</li>
+            <li>eq (len $pages) 0 = {{ eq (len $pages) 0 }}</li>
+            <li>not $pages = {{ not $pages }}</li>
+        </ul>
+    </div>
+</section>
+
+<!-- 直接渲染文章卡片 -->
+{{ if $pages }}
+    <section class="article-module">
+        <div class="container">
+            <div class="module-header">
+                <h2 class="module-title">{{ $title }}</h2>
+                <a href="{{ .viewAllLink }}" class="view-all">查看全部 <i class="fas fa-arrow-right"></i></a>
+            </div>
+            
+            <div class="articles-grid">
+                {{ range first 8 ($pages.ByDate.Reverse) }}
+                <article class="article-card">
+                    {{ $imageUrl := .Params.featured_image | default .Params.image | default "" }}
+                    {{ if $imageUrl }}
+                    <div class="article-image">
+                        <img src="{{ $imageUrl }}" alt="{{ .Title }}" loading="lazy">
+                    </div>
+                    {{ else }}
+                    <div class="article-image placeholder">
+                        <i class="fas fa-image"></i>
+                    </div>
+                    {{ end }}
+                    
+                    <div class="article-content">
+                        <div class="article-meta">
+                            <span class="article-date">{{ .Date.Format "01-02" }}</span>
+                            {{ if .Params.tags }}
+                            <span class="article-tag">{{ index .Params.tags 0 }}</span>
+                            {{ end }}
+                        </div>
+                        
+                        <h3 class="article-title">
+                            <a href="{{ .Permalink }}">{{ .Title }}</a>
+                        </h3>
+                        
+                        <p class="article-excerpt">
+                            {{ .Summary | plainify | truncate 60 }}
+                        </p>
+                        
+                        <div class="article-footer">
+                            <div class="article-stats">
+                                <span class="stat">
+                                    <i class="fas fa-eye"></i> {{ .Params.views | default 0 }}
+                                </span>
+                                <span class="stat">
+                                    <i class="fas fa-download"></i> {{ .Params.downloads | default 0 }}
+                                </span>
+                            </div>
+                            <a href="{{ .Permalink }}" class="read-more">
+                                <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                </article>
+                {{ end }}
+            </div>
+        </div>
+    </section>
+{{ else }}
+    <div style="background: #f8f9fa; padding: 2rem; margin: 2rem 0; border-radius: 8px; border: 1px solid #ddd; text-align: center;">
+        <p>没有找到匹配的文章</p>
+    </div>
+{{ end }}

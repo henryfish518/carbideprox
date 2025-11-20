@@ -1,0 +1,412 @@
+{{ define "main" }}
+
+<!-- 未来风格Hero区域 -->
+<section class="weilai-hero">
+    <div class="hero-background">
+        <div class="hero-particles" id="particles-js"></div>
+        <div class="hero-gradient-overlay"></div>
+    </div>
+    
+    <div class="container">
+        <div class="hero-content">
+            <div class="hero-badge">
+                <span class="badge-pulse"></span>
+                {{ .Site.Params.hero_badge | default "未来科技 · 引领创新" }}
+            </div>
+            <h1 class="hero-title">
+                <span class="title-glitch">{{ .Site.Title }}</span>
+                <span class="title-shadow">{{ .Site.Title }}</span>
+            </h1>
+            <p class="hero-subtitle">
+                {{ .Site.Params.hero_subtitle | default "探索未来科技，开启数字化转型新时代" }}
+            </p>
+            
+            <div class="hero-search">
+                <form action="/search" method="get" class="futuristic-search">
+                    <div class="search-input-wrapper">
+                        <input type="text" name="q" placeholder="搜索未来资源..." class="search-input" id="hero-search">
+                        <div class="search-line"></div>
+                    </div>
+                    <button type="submit" class="search-btn">
+                        <span class="btn-text">探索</span>
+                        <i class="fas fa-rocket"></i>
+                    </button>
+                </form>
+                
+                <div class="search-suggestions">
+                    <span class="suggestions-label">热门趋势：</span>
+                    <a href="#" class="suggestion-tag">AI人工智能</a>
+                    <a href="#" class="suggestion-tag">元宇宙</a>
+                    <a href="#" class="suggestion-tag">区块链</a>
+                    <a href="#" class="suggestion-tag">云计算</a>
+                </div>
+            </div>
+            
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <div class="stat-number" data-target="{{ len .Site.RegularPages }}">0</div>
+                    <div class="stat-label">未来资源</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" data-target="5000">0</div>
+                    <div class="stat-label">科技先锋</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" data-target="99">0</div>
+                    <div class="stat-label">创新指数%</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="scroll-indicator">
+        <div class="scroll-text">探索更多</div>
+        <div class="scroll-arrow">
+            <i class="fas fa-chevron-down"></i>
+        </div>
+    </div>
+</section>
+
+<!-- 未来科技分类展示 -->
+<section class="weilai-categories">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title">未来科技领域</h2>
+            <p class="section-subtitle">探索前沿科技，引领未来发展</p>
+        </div>
+        
+        <div class="categories-grid">
+            <div class="category-card tech-card">
+                <div class="card-glow"></div>
+                <div class="card-icon">
+                    <i class="fas fa-brain"></i>
+                </div>
+                <h3 class="card-title">人工智能</h3>
+                <p class="card-desc">深度学习、自然语言处理、计算机视觉等AI技术</p>
+                <div class="card-features">
+                    <span class="feature-tag">机器学习</span>
+                    <span class="feature-tag">神经网络</span>
+                    <span class="feature-tag">智能算法</span>
+                </div>
+                <a href="/categories/ai" class="card-link">
+                    <span>探索AI</span>
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+            
+            <div class="category-card tech-card">
+                <div class="card-glow"></div>
+                <div class="card-icon">
+                    <i class="fas fa-network-wired"></i>
+                </div>
+                <h3 class="card-title">区块链技术</h3>
+                <p class="card-desc">去中心化应用、智能合约、加密货币等区块链解决方案</p>
+                <div class="card-features">
+                    <span class="feature-tag">DeFi</span>
+                    <span class="feature-tag">NFT</span>
+                    <span class="feature-tag">Web3.0</span>
+                </div>
+                <a href="/categories/blockchain" class="card-link">
+                    <span>探索区块链</span>
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+            
+            <div class="category-card tech-card">
+                <div class="card-glow"></div>
+                <div class="card-icon">
+                    <i class="fas fa-vr-cardboard"></i>
+                </div>
+                <h3 class="card-title">元宇宙</h3>
+                <p class="card-desc">虚拟现实、增强现实、混合现实等沉浸式体验技术</p>
+                <div class="card-features">
+                    <span class="feature-tag">VR/AR</span>
+                    <span class="feature-tag">数字孪生</span>
+                    <span class="feature-tag">虚拟世界</span>
+                </div>
+                <a href="/categories/metaverse" class="card-link">
+                    <span>探索元宇宙</span>
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+            
+            <div class="category-card tech-card">
+                <div class="card-glow"></div>
+                <div class="card-icon">
+                    <i class="fas fa-cloud"></i>
+                </div>
+                <h3 class="card-title">云计算</h3>
+                <p class="card-desc">云基础设施、无服务器计算、边缘计算等云计算解决方案</p>
+                <div class="card-features">
+                    <span class="feature-tag">微服务</span>
+                    <span class="feature-tag">容器化</span>
+                    <span class="feature-tag">分布式</span>
+                </div>
+                <a href="/categories/cloud" class="card-link">
+                    <span>探索云计算</span>
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 未来资源展示 -->
+<section class="weilai-resources">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title">未来资源库</h2>
+            <p class="section-subtitle">精选前沿科技资源，助力创新发展</p>
+        </div>
+        
+        <div class="resource-tabs">
+            <div class="tab-nav">
+                <button class="tab-btn active" data-tab="featured">精选推荐</button>
+                <button class="tab-btn" data-tab="latest">最新发布</button>
+                <button class="tab-btn" data-tab="popular">热门资源</button>
+            </div>
+            
+            <div class="tab-content">
+                <div class="tab-pane active" id="featured">
+                    <div class="resources-grid">
+                        {{ range first 6 (where .Site.RegularPages "Params.featured" true) }}
+                        <article class="resource-card">
+                            <!-- 图片区域已移除 -->
+                            
+                            <div class="resource-content">
+                                <div class="resource-meta">
+                                    {{ if .Params.category }}
+                                    <span class="resource-category">{{ .Params.category }}</span>
+                                    {{ end }}
+                                    <span class="resource-date">{{ .Date.Format "01-02" }}</span>
+                                </div>
+                                
+                                <h3 class="resource-title">
+                                    <a href="{{ .Permalink }}">{{ .Title }}</a>
+                                </h3>
+                                
+                                <p class="resource-excerpt">
+                                    {{ .Summary | plainify | truncate 80 }}
+                                </p>
+                                
+                                <div class="resource-footer">
+                                    <div class="resource-stats">
+                                        <span class="stat-item">
+                                            <i class="fas fa-eye"></i>
+                                            {{ .Params.views | default 0 }}
+                                        </span>
+                                        <span class="stat-item">
+                                            <i class="fas fa-download"></i>
+                                            {{ .Params.downloads | default 0 }}
+                                        </span>
+                                    </div>
+                                    <a href="{{ .Permalink }}" class="resource-link">
+                                        详情 <i class="fas fa-arrow-right"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </article>
+                        {{ else }}
+                        <div class="no-resources">暂无精选资源</div>
+                        {{ end }}
+                    </div>
+                </div>
+                
+                <div class="tab-pane" id="latest">
+                    <div class="resources-grid">
+                        {{ range first 6 .Site.RegularPages }}
+                        <article class="resource-card">
+                            <!-- 图片区域已移除 -->
+                            
+                            <div class="resource-content">
+                                <div class="resource-meta">
+                                    {{ if .Params.category }}
+                                    <span class="resource-category">{{ .Params.category }}</span>
+                                    {{ end }}
+                                    <span class="resource-date">{{ .Date.Format "01-02" }}</span>
+                                </div>
+                                
+                                <h3 class="resource-title">
+                                    <a href="{{ .Permalink }}">{{ .Title }}</a>
+                                </h3>
+                                
+                                <p class="resource-excerpt">
+                                    {{ .Summary | plainify | truncate 80 }}
+                                </p>
+                                
+                                <div class="resource-footer">
+                                    <div class="resource-stats">
+                                        <span class="stat-item">
+                                            <i class="fas fa-eye"></i>
+                                            {{ .Params.views | default 0 }}
+                                        </span>
+                                        <span class="stat-item">
+                                            <i class="fas fa-download"></i>
+                                            {{ .Params.downloads | default 0 }}
+                                        </span>
+                                    </div>
+                                    <a href="{{ .Permalink }}" class="resource-link">
+                                        详情 <i class="fas fa-arrow-right"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </article>
+                        {{ else }}
+                        <div class="no-resources">暂无最新资源</div>
+                        {{ end }}
+                    </div>
+                </div>
+                
+                <div class="tab-pane" id="popular">
+                    <div class="resources-grid">
+                        {{ range first 6 (where .Site.RegularPages "Params.popular" true) }}
+                        <article class="resource-card">
+                            <!-- 图片区域已移除 -->
+                            
+                            <div class="resource-content">
+                                <div class="resource-meta">
+                                    {{ if .Params.category }}
+                                    <span class="resource-category">{{ .Params.category }}</span>
+                                    {{ end }}
+                                    <span class="resource-date">{{ .Date.Format "01-02" }}</span>
+                                </div>
+                                
+                                <h3 class="resource-title">
+                                    <a href="{{ .Permalink }}">{{ .Title }}</a>
+                                </h3>
+                                
+                                <p class="resource-excerpt">
+                                    {{ .Summary | plainify | truncate 80 }}
+                                </p>
+                                
+                                <div class="resource-footer">
+                                    <div class="resource-stats">
+                                        <span class="stat-item">
+                                            <i class="fas fa-eye"></i>
+                                            {{ .Params.views | default 0 }}
+                                        </span>
+                                        <span class="stat-item">
+                                            <i class="fas fa-download"></i>
+                                            {{ .Params.downloads | default 0 }}
+                                        </span>
+                                    </div>
+                                    <a href="{{ .Permalink }}" class="resource-link">
+                                        详情 <i class="fas fa-arrow-right"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </article>
+                        {{ else }}
+                        <div class="no-resources">暂无热门资源</div>
+                        {{ end }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 未来趋势 -->
+<section class="weilai-trends">
+    <div class="trend-background">
+        <div class="trend-grid"></div>
+        <div class="trend-overlay"></div>
+    </div>
+    
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title">未来趋势</h2>
+            <p class="section-subtitle">洞察科技发展前沿，把握未来趋势</p>
+        </div>
+        
+        <div class="trends-container">
+            <div class="trend-card primary">
+                <div class="trend-number">01</div>
+                <div class="trend-icon">
+                    <i class="fas fa-microchip"></i>
+                </div>
+                <h3 class="trend-title">量子计算</h3>
+                <p class="trend-desc">量子比特、量子算法、量子密码学等突破性计算技术</p>
+                <div class="trend-progress">
+                    <div class="progress-bar" style="width: 75%"></div>
+                    <span class="progress-text">75%</span>
+                </div>
+            </div>
+            
+            <div class="trend-card">
+                <div class="trend-number">02</div>
+                <div class="trend-icon">
+                    <i class="fas fa-dna"></i>
+                </div>
+                <h3 class="trend-title">生物科技</h3>
+                <p class="trend-desc">基因编辑、合成生物学、精准医疗等生命科学技术</p>
+                <div class="trend-progress">
+                    <div class="progress-bar" style="width: 60%"></div>
+                    <span class="progress-text">60%</span>
+                </div>
+            </div>
+            
+            <div class="trend-card">
+                <div class="trend-number">03</div>
+                <div class="trend-icon">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <h3 class="trend-title">自动驾驶</h3>
+                <p class="trend-desc">自动驾驶系统、智能交通、车联网等出行技术</p>
+                <div class="trend-progress">
+                    <div class="progress-bar" style="width: 45%"></div>
+                    <span class="progress-text">45%</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 未来合作伙伴 -->
+<section class="weilai-partners">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title">合作伙伴</h2>
+            <p class="section-subtitle">与未来科技领袖同行</p>
+        </div>
+        
+        <div class="partners-grid">
+            <div class="partner-logo">
+                <div class="logo-frame">
+                    <i class="fab fa-microsoft"></i>
+                </div>
+                <span class="partner-name">Microsoft</span>
+            </div>
+            
+            <div class="partner-logo">
+                <div class="logo-frame">
+                    <i class="fab fa-google"></i>
+                </div>
+                <span class="partner-name">Google</span>
+            </div>
+            
+            <div class="partner-logo">
+                <div class="logo-frame">
+                    <i class="fab fa-amazon"></i>
+                </div>
+                <span class="partner-name">Amazon</span>
+            </div>
+            
+            <div class="partner-logo">
+                <div class="logo-frame">
+                    <i class="fab fa-apple"></i>
+                </div>
+                <span class="partner-name">Apple</span>
+            </div>
+            
+            <div class="partner-logo">
+                <div class="logo-frame">
+                    <i class="fab fa-tesla"></i>
+                </div>
+                <span class="partner-name">Tesla</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+{{ end }}

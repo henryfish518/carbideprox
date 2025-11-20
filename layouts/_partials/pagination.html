@@ -1,0 +1,263 @@
+<div class="pagination-container">
+    <nav class="pagination" aria-label="文章分页导航">
+        {{ $paginator := .Paginate (where .Site.RegularPages "Section" "blog") 16 }}
+        
+        {{ if gt $paginator.TotalPages 1 }}
+        <div class="pagination-wrapper">
+            <!-- 上一页 -->
+            <div class="pagination-controls">
+                {{ if $paginator.HasPrev }}
+                <a href="{{ $paginator.Prev.URL }}" class="pagination-btn prev" aria-label="上一页">
+                    <i class="fas fa-chevron-left"></i>
+                    <span>上一页</span>
+                </a>
+                {{ else }}
+                <span class="pagination-btn prev disabled" aria-disabled="true">
+                    <i class="fas fa-chevron-left"></i>
+                    <span>上一页</span>
+                </span>
+                {{ end }}
+            </div>
+            
+            <!-- 页码 -->
+            <div class="pagination-pages">
+                {{ $current := $paginator.PageNumber }}
+                {{ $total := $paginator.TotalPages }}
+                
+                <!-- 第一页 -->
+                {{ if gt $current 1 }}
+                <a href="{{ $paginator.First.URL }}" class="pagination-page" aria-label="第1页">1</a>
+                {{ if gt $current 2 }}
+                <span class="pagination-ellipsis">...</span>
+                {{ end }}
+                {{ end }}
+                
+                <!-- 中间页码 -->
+                {{ $start := math.Max 1 (sub $current 2) }}
+                {{ $end := math.Min $total (add $current 2) }}
+                
+                {{ range $paginator.Pagers }}
+                {{ if and (ge .PageNumber $start) (le .PageNumber $end) }}
+                {{ if eq .PageNumber $current }}
+                <span class="pagination-page active" aria-current="page">{{ .PageNumber }}</span>
+                {{ else }}
+                <a href="{{ .URL }}" class="pagination-page" aria-label="第{{ .PageNumber }}页">{{ .PageNumber }}</a>
+                {{ end }}
+                {{ end }}
+                {{ end }}
+                
+                <!-- 最后一页 -->
+                {{ if lt $current $total }}
+                {{ if lt $current (sub $total 1) }}
+                <span class="pagination-ellipsis">...</span>
+                {{ end }}
+                <a href="{{ $paginator.Last.URL }}" class="pagination-page" aria-label="第{{ $total }}页">{{ $total }}</a>
+                {{ end }}
+            </div>
+            
+            <!-- 下一页 -->
+            <div class="pagination-controls">
+                {{ if $paginator.HasNext }}
+                <a href="{{ $paginator.Next.URL }}" class="pagination-btn next" aria-label="下一页">
+                    <span>下一页</span>
+                    <i class="fas fa-chevron-right"></i>
+                </a>
+                {{ else }}
+                <span class="pagination-btn next disabled" aria-disabled="true">
+                    <span>下一页</span>
+                    <i class="fas fa-chevron-right"></i>
+                </span>
+                {{ end }}
+            </div>
+            
+            <!-- 页码信息 -->
+            <div class="pagination-info">
+                <span class="pagination-stats">
+                    第 {{ $paginator.PageNumber }}/{{ $paginator.TotalPages }} 页
+                </span>
+                <span class="pagination-count">
+                    {{ $paginator.TotalNumberOfElements }} 篇文章
+                </span>
+            </div>
+        </div>
+        {{ end }}
+    </nav>
+</div>
+
+<style>
+.pagination-container {
+    margin: 3rem 0 2rem;
+    padding: 0 1rem;
+}
+
+.pagination {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.pagination-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.pagination-controls {
+    display: flex;
+    gap: 1rem;
+}
+
+.pagination-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    color: var(--text-primary);
+    background: var(--bg-primary);
+    transition: all 0.3s ease;
+    font-size: 0.95rem;
+    font-weight: 500;
+}
+
+.pagination-btn:hover:not(.disabled) {
+    background: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(var(--primary-rgb), 0.2);
+}
+
+.pagination-btn.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    color: var(--text-secondary);
+}
+
+.pagination-pages {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.pagination-page {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 44px;
+    height: 44px;
+    padding: 0 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    color: var(--text-primary);
+    background: var(--bg-primary);
+    transition: all 0.3s ease;
+    font-size: 0.95rem;
+    font-weight: 500;
+}
+
+.pagination-page:hover:not(.active) {
+    background: var(--bg-secondary);
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+}
+
+.pagination-page.active {
+    background: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+    cursor: default;
+}
+
+.pagination-ellipsis {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 44px;
+    height: 44px;
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+}
+
+.pagination-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.pagination-stats {
+    font-weight: 500;
+}
+
+.pagination-count {
+    opacity: 0.8;
+}
+
+/* 移动端优化 */
+@media (max-width: 768px) {
+    .pagination-container {
+        margin: 2rem 0 1.5rem;
+        padding: 0 0.5rem;
+    }
+    
+    .pagination-wrapper {
+        gap: 1rem;
+    }
+    
+    .pagination-controls {
+        gap: 0.75rem;
+    }
+    
+    .pagination-btn {
+        padding: 0.625rem 1.25rem;
+        font-size: 0.9rem;
+    }
+    
+    .pagination-pages {
+        gap: 0.375rem;
+    }
+    
+    .pagination-page {
+        min-width: 40px;
+        height: 40px;
+        padding: 0 0.875rem;
+        font-size: 0.9rem;
+    }
+    
+    .pagination-ellipsis {
+        min-width: 40px;
+        height: 40px;
+        font-size: 0.9rem;
+    }
+    
+    .pagination-info {
+        font-size: 0.85rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .pagination-pages {
+        gap: 0.25rem;
+    }
+    
+    .pagination-page {
+        min-width: 36px;
+        height: 36px;
+        padding: 0 0.75rem;
+        font-size: 0.85rem;
+    }
+    
+    .pagination-btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.85rem;
+    }
+}
+</style>

@@ -1,0 +1,51 @@
+<nav class="navbar">
+    <div class="container">
+        <div class="navbar-content">
+            <!-- Logo -->
+            <div class="navbar-brand">
+                <a href="{{ .Site.BaseURL }}" class="logo-link">
+                    {{ if .Site.Params.logo }}
+                    <img src="{{ .Site.Params.logo }}" alt="{{ .Site.Title }}" class="logo-img">
+                    {{ else }}
+                    <span class="logo-text">{{ .Site.Title }}</span>
+                    {{ end }}
+                </a>
+            </div>
+
+            <!-- 主导航菜单 -->
+            <div class="navbar-menu">
+                <ul class="nav-links">
+                    {{ range .Site.Menus.main }}
+                    <li class="nav-item">
+                        <a href="{{ .URL }}" class="nav-link {{ if $.IsMenuCurrent "main" . }}active{{ end }}">
+                            {{ .Name }}
+                        </a>
+                    </li>
+                    {{ end }}
+                </ul>
+            </div>
+
+            <!-- 移动端菜单切换 -->
+            <div class="navbar-actions">
+                <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+
+        <!-- 移动端菜单 -->
+        <div class="mobile-menu" id="mobileMenu">
+            <ul class="mobile-nav-links">
+                {{ range .Site.Menus.main }}
+                <li class="mobile-nav-item">
+                    <a href="{{ .URL }}" class="mobile-nav-link">
+                        {{ .Name }}
+                    </a>
+                </li>
+                {{ end }}
+            </ul>
+        </div>
+    </div>
+</nav>

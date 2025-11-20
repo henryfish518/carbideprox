@@ -1,0 +1,140 @@
+<footer class="weilai-footer">
+    <div class="footer-grid"></div>
+    
+    <div class="container">
+        <div class="footer-content">
+            <!-- 关于我们 -->
+            <div class="footer-about">
+                <div class="footer-logo">
+                    {{ if .Site.Params.logo }}
+                    <img src="{{ .Site.Params.logo }}" alt="{{ .Site.Title }}" class="logo-img">
+                    {{ else }}
+                    <i class="fas fa-rocket" style="font-size: 2.5rem; margin-right: 15px; color: var(--weilai-accent);"></i>
+                    {{ end }}
+                    <span class="logo-text">{{ .Site.Title }}</span>
+                </div>
+                
+                <p class="footer-desc">
+                    {{ .Site.Params.footer_desc | default "未来科技探索平台，致力于为您提供最前沿的技术资源、创新的解决方案和专业的科技资讯。与我们一起探索数字世界的无限可能。" }}
+                </p>
+                
+                <div class="social-links">
+                    <a href="{{ .Site.Params.social_twitter | default "#" }}" class="social-link" title="Twitter">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="{{ .Site.Params.social_facebook | default "#" }}" class="social-link" title="Facebook">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="{{ .Site.Params.social_linkedin | default "#" }}" class="social-link" title="LinkedIn">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a href="{{ .Site.Params.social_github | default "#" }}" class="social-link" title="GitHub">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="{{ .Site.Params.social_wechat | default "#" }}" class="social-link" title="WeChat">
+                        <i class="fab fa-weixin"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- 快速链接 -->
+            <div class="footer-links">
+                <h3 class="footer-title">快速链接</h3>
+                <ul class="links-list">
+                    <li class="link-item">
+                        <a href="/" class="footer-link">
+                            <i class="fas fa-angle-right"></i>
+                            首页
+                        </a>
+                    </li>
+                    <li class="link-item">
+                        <a href="/categories" class="footer-link">
+                            <i class="fas fa-angle-right"></i>
+                            资源分类
+                        </a>
+                    </li>
+                    <li class="link-item">
+                        <a href="/tags" class="footer-link">
+                            <i class="fas fa-angle-right"></i>
+                            热门标签
+                        </a>
+                    </li>
+                    <li class="link-item">
+                        <a href="/about" class="footer-link">
+                            <i class="fas fa-angle-right"></i>
+                            关于我们
+                        </a>
+                    </li>
+                    <li class="link-item">
+                        <a href="/contact" class="footer-link">
+                            <i class="fas fa-angle-right"></i>
+                            联系方式
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            
+            <!-- 联系信息 -->
+            <div class="footer-contact">
+                <h3 class="footer-title">联系我们</h3>
+                <ul class="contact-info">
+                    <li class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="contact-text">
+                            <span class="contact-label">地址</span>
+                            {{ .Site.Params.address | default "上海市浦东新区世纪大道100号" }}
+                        </div>
+                    </li>
+                    <li class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <div class="contact-text">
+                            <span class="contact-label">电话</span>
+                            <a href="tel:{{ .Site.Params.phone | default "400-123-4567" }}">{{ .Site.Params.phone | default "400-123-4567" }}</a>
+                        </div>
+                    </li>
+                    <li class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="contact-text">
+                            <span class="contact-label">邮箱</span>
+                            <a href="mailto:{{ .Site.Params.email | default "contact@weilai.com" }}">{{ .Site.Params.email | default "contact@weilai.com" }}</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            
+            <!-- 订阅区域 -->
+            <div class="footer-subscribe">
+                <h3 class="footer-title">订阅我们</h3>
+                <p class="subscribe-desc">订阅我们的新闻通讯，获取最新的科技资讯和资源更新</p>
+                
+                <form action="/subscribe" method="post" class="subscribe-form">
+                    <div class="form-group">
+                        <input type="email" name="email" placeholder="您的邮箱地址" class="email-input" required>
+                        <button type="submit" class="subscribe-btn">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                    <p class="form-note">我们尊重您的隐私，绝不分享您的邮箱地址</p>
+                </form>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <div class="copyright">
+                <p>&copy; {{ now.Format "2006" }} {{ .Site.Title }}. 保留所有权利</p>
+            </div>
+            
+            <div class="footer-bottom-links">
+                <a href="/privacy" class="bottom-link">隐私政策</a>
+                <a href="/terms" class="bottom-link">使用条款</a>
+                <a href="/sitemap.xml" class="bottom-link">网站地图</a>
+            </div>
+        </div>
+    </div>
+</footer>
